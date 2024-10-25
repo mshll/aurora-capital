@@ -16,7 +16,7 @@ const geistMono = localFont({
   weight: '100 900',
 });
 
-const cairo = Cairo();
+const cairo = Cairo({ subsets: ['latin', 'latin-ext', 'arabic'] });
 
 export const metadata = {
   title: 'Aurora Capital',
