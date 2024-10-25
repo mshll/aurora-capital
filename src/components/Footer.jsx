@@ -57,11 +57,11 @@ function Footer() {
   return (
     <footer className='w-full border-t border-border/[.5] bg-background'>
       <div className='container mx-auto flex flex-col items-center justify-between p-2'>
-        <div className='flex w-full items-start justify-between gap-x-10 px-4 py-10'>
+        <div className='flex w-full flex-col items-start justify-between gap-10 px-4 py-10 md:flex-row'>
           <div className='flex flex-col items-start justify-center gap-6 text-start'>
             <Link href='/' className='flex items-center justify-center gap-x-2'>
               {/* <h1 className='text-3xl font-black tracking-tight'>{metadata.title}</h1> */}
-              <Image src={siteLogoFull} alt={metadata.title} width={200} height={50} className='' />
+              <Image src={siteLogoFull} alt={metadata.title} width={200} height={50} className='dark:invert' />
             </Link>
             <p className='text-sm text-muted-foreground'>{metadata.description}</p>
             <div className='flex items-center justify-start gap-x-4'>

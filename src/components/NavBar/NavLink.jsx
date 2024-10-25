@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 function NavLink({ href, children, ...props }) {
   const pathname = usePathname();
   const isActive = pathname === href;
-  const activeClasses = 'bg-accent text-accent-foreground font-semibold';
+  const activeClasses = 'bg-accent text-accent-foreground font-bold';
   return (
     <Link href={href}>
       <Button variant='ghost' size='sm' className={isActive ? activeClasses : ''} {...props}>

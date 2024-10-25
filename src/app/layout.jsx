@@ -1,5 +1,5 @@
-import localFont from 'next/font/local';
 import './globals.css';
+import localFont from 'next/font/local';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { ThemeProvider } from '@/components/theme-provider';
@@ -19,14 +19,16 @@ const geistMono = localFont({
 const cairo = Cairo({ subsets: ['latin', 'latin-ext', 'arabic'] });
 
 export const metadata = {
-  title: 'Aurora Capital',
+  title: 'Aurora Capital Bank',
   description: 'Illuminating Your Financial Future',
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang='en' suppressHydrationWarning>
-      <body className={`${cairo.className} ${geistMono.variable} bg-background text-foreground antialiased`}>
+      <body
+        className={`${cairo.className} ${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased`}
+      >
         <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
           <NavBar />
           <main className='flex min-h-screen flex-col items-center justify-center'>{children}</main>
