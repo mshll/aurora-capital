@@ -31,7 +31,7 @@ export default function RootLayout({ children }) {
       >
         <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
           <NavBar />
-          <main className='flex min-h-screen flex-col items-center justify-center'>{children}</main>
+          <main className='flex min-h-[90vh] flex-col items-center justify-center'>{children}</main>
           <Footer />
         </ThemeProvider>
       </body>

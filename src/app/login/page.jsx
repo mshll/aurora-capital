@@ -1,8 +1,31 @@
+import LoginForm from '@/components/LoginForm';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import Link from 'next/link';
+import { metadata } from '../layout';
+
 export default function LoginPage() {
   return (
     <div className='flex h-full flex-1 flex-col items-center justify-center gap-16 p-8 pb-20 sm:p-20'>
-      <h1 className='scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl'>Login</h1>
-      <p className='leading-7'>This is the login page.</p>
+      <Card>
+        <CardHeader>
+          <CardTitle className='text-xl'>Welcome back</CardTitle>
+          <CardDescription>Log in to your {metadata.title} account.</CardDescription>
+        </CardHeader>
+        <CardContent className='grid gap-4'>
+          <LoginForm />
+        </CardContent>
+        <CardFooter>
+          <p className='text-xs text-muted-foreground'>
+            Don't have an account?
+            <Link href='/register'>
+              <Button variant='link' size='sm' className='px-1 text-muted-foreground'>
+                Register now!
+              </Button>
+            </Link>
+          </p>
+        </CardFooter>
+      </Card>
     </div>
   );
 }
