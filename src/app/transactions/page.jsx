@@ -34,7 +34,7 @@ import {
 const transactions = [
   {
     id: "1",
-    date: "2024-10-01",
+    createdAt: "2024-10-02T20:16:14.326Z",
     description: "Grocery Store",
     amount: -85.484,
     balance: 1500.25,
@@ -42,7 +42,7 @@ const transactions = [
   },
   {
     id: "2",
-    date: "2024-10-02",
+    createdAt: "2024-10-03T20:16:14.326Z",
     description: "Technology Academy Transfer",
     amount: 335.484,
     balance: 4000.25,
@@ -50,7 +50,7 @@ const transactions = [
   },
   {
     id: "3",
-    date: "2024-10-03",
+    createdAt: "2024-10-04T20:16:14.326Z",
     description: "Oula Gas Station",
     amount: -6.484,
     balance: 3879.50,
@@ -58,7 +58,7 @@ const transactions = [
   },
   {
     id: "4",
-    date: "2024-10-04",
+    createdAt: "2024-10-05T20:16:14.326Z",
     description: "Online Shopping",
     amount: -65.484,
     balance: 3813.51,
@@ -66,7 +66,7 @@ const transactions = [
   },
   {
     id: "5",
-    date: "2024-10-05",
+    createdAt: "2024-10-06T20:16:14.326Z",
     description: "Transfer to Haya",
     amount: -12.484,
     balance: 3768.51,
@@ -83,7 +83,7 @@ export default function Transactions() {
   const filteredTransactions = transactions.filter((transaction) => {
     const matchesSearch = transaction.description.toLowerCase().includes(query.toLowerCase())
     const matchesFilter = filter === "all" || transaction.type === filter
-    const matchesDate = !date || isSameDay(parseISO(transaction.date), date)
+    const matchesDate = !date || isSameDay(parseISO(transaction.createdAt), date)
     return matchesSearch && matchesFilter && matchesDate
   })
 
@@ -140,7 +140,7 @@ export default function Transactions() {
             <Card key={transaction.id}>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">
-                  {transaction.description}
+                  {transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1)}
                 </CardTitle>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -162,7 +162,7 @@ export default function Transactions() {
                   <div className="flex-1 space-y-1">
                     <p className="text-sm text-muted-foreground flex items-center">
                       <CalendarIcon className="mr-1 h-4 w-4" />
-                      {transaction.date}
+                      {format(parseISO(transaction.createdAt), "MMMM dd, yyyy, hh:mm a")}
                     </p>
                     <p className="text-2xl font-bold">
                       <span className={transaction.amount < 0 ? "text-red-500" : "text-green-500"}>
@@ -175,10 +175,10 @@ export default function Transactions() {
                       </span>
                     </p>
                   </div>
-                  <div className="flex flex-col items-end justify-between">
+                  {/* <div className="flex flex-col items-end justify-between">
                     <p className="text-xs text-muted-foreground">Balance</p>
                     <p className="text-sm font-medium">${transaction.balance.toFixed(3)}</p>
-                  </div>
+                  </div> */}
                 </div>
               </CardContent>
             </Card>
