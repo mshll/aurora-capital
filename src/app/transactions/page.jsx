@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { ArrowDownIcon, ArrowUpIcon, CalendarIcon, DollarSign, MoreHorizontal, Search } from "lucide-react"
-import { format, parseISO } from "date-fns"
+import { format, parseISO, isSameDay } from "date-fns"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -58,7 +58,7 @@ const transactions = [
   },
   {
     id: "4",
-    date: "2023-10-04",
+    date: "2024-10-04",
     description: "Online Shopping",
     amount: -65.484,
     balance: 3813.51,
@@ -66,7 +66,7 @@ const transactions = [
   },
   {
     id: "5",
-    date: "2023-10-05",
+    date: "2024-10-05",
     description: "Transfer to Haya",
     amount: -12.484,
     balance: 3768.51,
@@ -83,13 +83,12 @@ export default function Transactions() {
   const filteredTransactions = transactions.filter((transaction) => {
     const matchesSearch = transaction.description.toLowerCase().includes(query.toLowerCase())
     const matchesFilter = filter === "all" || transaction.type === filter
-    return matchesSearch && matchesFilter
+    const matchesDate = !date || isSameDay(parseISO(transaction.date), date)
+    return matchesSearch && matchesFilter && matchesDate
   })
 
   return (
     <div className='flex h-full flex-1 flex-col items-center justify-center gap-16 p-8 pb-20 sm:p-20'>
-      {/* <h1 className='scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl'>Transactions</h1> */}
-      {/* <p className='leading-7'>This is the transactions page.</p> */}
       <div className=" h-[500px] w-[900px] overflow-y-auto no-scrollbar rounded-lg border bg-card text-card-foreground shadow-sm p-6">
       <div className="flex flex-col space-y-1.5 mb-6">
         <h3 className="text-2xl font-semibold leading-none tracking-tight">Recent Transactions</h3>
@@ -109,7 +108,7 @@ export default function Transactions() {
 
           <Popover>
             <PopoverTrigger asChild>
-              <Button variant={"outline"} className={cn("w-[240px] justify-start text-left font-normal", !date && "text-muted-foreground")}>
+              <Button variant={"outline"} className={cn("w-[240] justify-start text-left font-normal", !date && "text-muted-foreground")}>
                 <CalendarIcon className="mr-2 h-4 w-4" />
                 {date ? format(date, "MMMM dd, yyyy") : "Pick a date"}
               </Button>
