@@ -1,6 +1,6 @@
 import { getToken } from '@/lib/token';
 
-const baseUrl = 'https://task-react-auth-backend.eapi.joincoded.com/api';
+const baseUrl = 'https://react-bank-project.eapi.joincoded.com';
 
 async function getHeaders() {
   const token = await getToken();
