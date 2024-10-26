@@ -1,7 +1,9 @@
-import { baseUrl } from './config';
+import { baseUrl, getHeaders } from './config';
 
 export const myTransactions = async () => {
-  const response = await fetch(`${baseUrl}/mini-project/api/transactions/my`);
+  const response = await fetch(`${baseUrl}/mini-project/api/transactions/my`, {
+    headers: await getHeaders(),
+  });
   const users = response.json();
   return users;
 };

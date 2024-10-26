@@ -17,7 +17,7 @@ export default function LoginPage() {
         </CardContent>
         <CardFooter>
           <p className='text-xs text-muted-foreground'>
-            Don't have an account?
+            Don&apos;t have an account?
             <Link href='/register'>
               <Button variant='link' size='sm' className='px-1 text-muted-foreground'>
                 Register now!

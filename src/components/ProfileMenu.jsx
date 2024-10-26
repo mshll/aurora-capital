@@ -17,25 +17,37 @@ import { baseUrl } from '@/actions/config';
 
 async function ProfileMenu() {
   const user = await myProfile();
-  console.log(user);
+
+  const profileItems = [
+    { name: 'Profile', href: '/profile' },
+    { name: 'Dashboard', href: '/dashboard' },
+    { name: 'Transactions', href: '/transactions' },
+    { name: 'Users', href: '/users' },
+  ];
+
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Link href='/profile'>
-            <Avatar className='h-9 w-9'>
-              <AvatarImage src={`${baseUrl}/${user.image}`} alt='ACB' />
-              <AvatarFallback>
-                <UserIcon className='h-5 w-5' />
-              </AvatarFallback>
-            </Avatar>
-          </Link>
+        <DropdownMenuTrigger asChild className='cursor-pointer'>
+          <Avatar className='h-9 w-9'>
+            <AvatarImage src={`${baseUrl}/${user.image}`} alt='ACB' />
+            <AvatarFallback>
+              <UserIcon className='h-5 w-5' />
+            </AvatarFallback>
+          </Avatar>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className='w-56'>
+        <DropdownMenuContent className='w-56' align='end'>
           <DropdownMenuLabel>Hello, {user.username.charAt(0).toUpperCase() + user.username.slice(1)}</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Dashboard</DropdownMenuItem>
-          <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
+          {profileItems.map((item) => (
+            <Link key={item.href} href={item.href}>
+              <DropdownMenuItem>{item.name}</DropdownMenuItem>
+            </Link>
+          ))}
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={logout} className='cursor-pointer text-destructive'>
+            Logout
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </>

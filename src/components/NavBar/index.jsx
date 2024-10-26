@@ -9,8 +9,8 @@ import siteLogo from '@/images/logo.svg';
 function NavBar() {
   const navItems = [
     { name: 'Home', href: '/' },
-    { name: 'Transactions', href: '/transactions' },
-    { name: 'Users', href: '/users' },
+    { name: 'About Us', href: '/about' },
+    { name: 'Contact', href: '/contact' },
     // { name: 'Profile', href: '/profile' },
   ];
 
