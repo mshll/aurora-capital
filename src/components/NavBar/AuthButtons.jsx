@@ -2,10 +2,10 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { UserIcon } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { getUser } from '@/actions/token';
 
-function AuthButtons() {
-  const user = null; // TODO
-  // const user = true; // TODO
+async function AuthButtons() {
+  const user = await getUser();
 
   if (user)
     return (

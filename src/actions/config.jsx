@@ -1,4 +1,4 @@
-import { getToken } from '@/lib/token';
+import { getToken } from './token';
 
 const baseUrl = 'https://react-bank-project.eapi.joincoded.com';
 

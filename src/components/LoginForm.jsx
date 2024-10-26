@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { Separator } from '@/components/ui/separator';
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
 import { Button } from '@/components/ui/button';
+import { login } from '@/actions/auth';
 
 const formSchema = z.object({
   username: z
@@ -20,7 +21,7 @@ const formSchema = z.object({
     .string({
       required_error: 'Password is required.',
     })
-    .min(8, {
+    .min(2, {
       message: 'Password must be at least 8 characters.',
     }),
 });
@@ -32,8 +33,7 @@ function LoginForm() {
     <>
       <AutoForm
         onSubmit={(data, { setError }) => {
-          // TODO submit data to server
-          console.log(data);
+          login(data);
           setValues({
             username: '',
             password: '',

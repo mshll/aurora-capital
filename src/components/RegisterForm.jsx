@@ -4,10 +4,11 @@ import AutoForm, { AutoFormSubmit } from '@/components/ui/auto-form';
 import * as z from 'zod';
 import { DependencyType } from './ui/auto-form/types';
 import { useState } from 'react';
+import { register } from '@/actions/auth';
 
 const formSchema = z
   .object({
-    profileImage: z
+    image: z
       .string({
         required_error: 'Profile image is required.',
       })
@@ -52,15 +53,15 @@ function RegisterForm() {
     <>
       <AutoForm
         onSubmit={(data, { setError }) => {
-          // TODO submit data to server
-          console.log(data);
-          setValues({
-            username: '',
-            password: '',
-            confirm: '',
-            profileImage: '',
-            acceptTerms: false,
-          });
+          const { username, password, image } = data;
+          register({ username, password, image });
+          // setValues({
+          //   username: '',
+          //   password: '',
+          //   confirm: '',
+          //   image: '',
+          //   acceptTerms: false,
+          // });
         }}
         values={values}
         onValuesChange={setValues}
@@ -79,7 +80,7 @@ function RegisterForm() {
               placeholder: '••••••••',
             },
           },
-          profileImage: {
+          image: {
             fieldType: 'file',
             inputProps: {
               accept: 'image/*',
