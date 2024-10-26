@@ -1,12 +1,21 @@
 import { baseUrl, getHeaders } from './config';
 
 export const getAllUsers = async () => {
-  const response = await fetch(`${baseUrl}/mini-project/api/auth/users`);
+  const response = await fetch(`${baseUrl}/mini-project/api/auth/users`, {
+    // method: 'get',
+    headers: await getHeaders(),
+    // body: JSON.stringify(userData),
+  });
+
   const users = response.json();
   return users;
 };
 export const myProfile = async () => {
-  const response = await fetch(`${baseUrl}/mini-project/api/auth/me`);
+  const response = await fetch(`${baseUrl}/mini-project/api/auth/me`, {
+    // method: 'get',
+    headers: await getHeaders(),
+    // body: JSON.stringify(userData),
+  });
   const users = response.json();
   return users;
 };
