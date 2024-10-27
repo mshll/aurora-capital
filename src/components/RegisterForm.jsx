@@ -3,15 +3,24 @@
 import AutoForm, { AutoFormSubmit } from '@/components/ui/auto-form';
 import * as z from 'zod';
 import { DependencyType } from './ui/auto-form/types';
-import { useState } from 'react';
 import { register } from '@/actions/auth';
+import { useState } from 'react';
+import { toast } from 'sonner';
+import { redirect } from 'next/navigation';
+import { LoaderCircle } from 'lucide-react';
+
+const MAX_FILE_SIZE = 25000000;
+const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
 const formSchema = z
   .object({
     image: z
-      .string({
-        required_error: 'Profile image is required.',
-      })
+      .any()
+      .refine(
+        (file) => ACCEPTED_IMAGE_TYPES.includes(file?.type),
+        'Please upload a valid image file (jpeg, jpg, png, webp).',
+      )
+      .refine((file) => file?.size <= MAX_FILE_SIZE, `Max image size is ${MAX_FILE_SIZE / 1000000}MB.`)
       .describe('Profile image'),
 
     username: z
@@ -39,7 +48,12 @@ const formSchema = z
       })
       .describe('Confirm password.'),
 
-    acceptTerms: z.boolean().describe('Accept terms and conditions.'),
+    acceptTerms: z
+      .boolean()
+      .describe('Accept terms and conditions.')
+      .refine((data) => data, {
+        message: 'You must accept the terms and conditions.',
+      }),
   })
   .refine((data) => data.password === data.confirm, {
     message: 'Passwords do not match.',
@@ -48,20 +62,27 @@ const formSchema = z
 
 function RegisterForm() {
   const [values, setValues] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <>
       <AutoForm
-        onSubmit={(data, { setError }) => {
-          const { username, password, image } = data;
-          register({ username, password, image });
-          // setValues({
-          //   username: '',
-          //   password: '',
-          //   confirm: '',
-          //   image: '',
-          //   acceptTerms: false,
-          // });
+        onSubmit={(data) => {
+          setIsLoading(true);
+          register(data).then((res) => {
+            setIsLoading(false);
+            if (!res) {
+              toast.error('An error occurred, please try again.');
+              setValues({
+                ...values,
+                password: '',
+                confirm: '',
+              });
+            } else {
+              toast.success('Registered successfully.');
+              redirect('/');
+            }
+          });
         }}
         values={values}
         onValuesChange={setValues}
@@ -112,8 +133,9 @@ function RegisterForm() {
           },
         ]}
       >
-        {/* <ImageUpload required /> */}
-        <AutoFormSubmit className={'w-full'}>Sign Up</AutoFormSubmit>
+        <AutoFormSubmit className={'w-full'} disabled={isLoading}>
+          {isLoading ? <LoaderCircle className='h-6 w-6 animate-spin' /> : 'Sign Up'}
+        </AutoFormSubmit>
       </AutoForm>
     </>
   );

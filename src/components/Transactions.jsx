@@ -112,7 +112,7 @@ function Transactions({ transactions, user }) {
                   className={cn('w-[240] justify-start text-left font-normal', !date && 'text-muted-foreground')}
                 >
                   <CalendarIcon className='mr-2 h-4 w-4' />
-                  {date ? format(date, 'MMMM dd, yyyy') : 'Pick a date'}
+                  {date ? format(date, 'MMMM dd, yyyy') : 'Filter by date'}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className='w-auto p-0' align='start'>

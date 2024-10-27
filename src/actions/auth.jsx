@@ -7,37 +7,40 @@ import { redirect } from 'next/navigation';
 import { deleteToken, setToken } from './token';
 
 export async function login(formData) {
-  const response = await fetch(`${baseUrl}/mini-project/api/auth/login`, {
-    method: 'POST',
-    headers: await getHeaders(),
-    body: JSON.stringify(formData),
-  });
-
-  const { token } = await response.json();
-  await setToken(token);
-
-  revalidatePath('/');
-  redirect('/');
-}
-
-export async function register(formData) {
-  console.log(formData);
-  const response = await fetch(`${baseUrl}/mini-project/api/auth/register`, {
-    method: 'POST',
-    body: formData,
-  });
-
-  let redirectPath = '/register';
   try {
+    const response = await fetch(`${baseUrl}/mini-project/api/auth/login`, {
+      method: 'POST',
+      headers: await getHeaders(),
+      body: JSON.stringify(formData),
+    });
     const { token } = await response.json();
-    console.log(token);
     await setToken(token);
-    revalidatePath('/users');
-    redirectPath = '/';
+    return true;
   } catch (error) {
     console.error(error);
-  } finally {
-    redirect(redirectPath);
+    return false;
+  }
+}
+
+export async function register(data) {
+  const formData = new FormData();
+  formData.append('username', data.username);
+  formData.append('password', data.password);
+  formData.append('image', data.image);
+
+  try {
+    const response = await fetch(`${baseUrl}/mini-project/api/auth/register`, {
+      method: 'POST',
+      body: formData,
+    });
+
+    const { token } = await response.json();
+    await setToken(token);
+    revalidatePath('/users');
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
   }
 }
 

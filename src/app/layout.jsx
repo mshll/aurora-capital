@@ -4,6 +4,7 @@ import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Cairo } from 'next/font/google';
+import { Toaster } from '@/components/ui/sonner';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -46,6 +47,7 @@ export default function RootLayout({ children }) {
         <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
           <NavBar />
           <main className='flex min-h-[90vh] flex-col items-center justify-center'>{children}</main>
+          <Toaster />
           <Footer />
         </ThemeProvider>
       </body>
