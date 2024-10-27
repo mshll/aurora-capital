@@ -20,17 +20,20 @@ export async function login(formData) {
   redirect('/');
 }
 
-export async function register(formData) {
-  console.log(formData);
-  const response = await fetch(`${baseUrl}/mini-project/api/auth/register`, {
-    method: 'POST',
-    body: formData,
-  });
+export async function register(data) {
+  const formData = new FormData();
+  formData.append('username', data.username);
+  formData.append('password', data.password);
+  formData.append('image', data.image);
 
   let redirectPath = '/register';
   try {
+    const response = await fetch(`${baseUrl}/mini-project/api/auth/register`, {
+      method: 'POST',
+      body: formData,
+    });
+
     const { token } = await response.json();
-    console.log(token);
     await setToken(token);
     revalidatePath('/users');
     redirectPath = '/';

@@ -21,26 +21,26 @@ const formSchema = z.object({
     .string({
       required_error: 'Password is required.',
     })
-    .min(2, {
-      message: 'Password must be at least 8 characters.',
+    .min(4, {
+      message: 'Password must be at least 4 characters.',
     }),
 });
 
 function LoginForm() {
-  const [values, setValues] = useState({});
+  // const [values, setValues] = useState({});
 
   return (
     <>
       <AutoForm
         onSubmit={(data, { setError }) => {
           login(data);
-          setValues({
-            username: '',
-            password: '',
-          });
+          // setValues({
+          //   username: '',
+          //   password: '',
+          // });
         }}
-        values={values}
-        onValuesChange={setValues}
+        // values={values}
+        // onValuesChange={setValues}
         className={'min-w-[20rem]'}
         formSchema={formSchema}
         fieldConfig={{
@@ -56,20 +56,18 @@ function LoginForm() {
       </AutoForm>
       <div className='flex items-center gap-4'>
         <Separator className='flex-1' />
-        <span className='text-xs uppercase text-muted-foreground/[.4]'>or continue with</span>
+        <span className='text-xs uppercase text-muted-foreground/[.4]'>or</span>
         <Separator className='flex-1' />
       </div>
       <Button
         variant='outline'
         className='w-full gap-3'
         onClick={() => {
-          window.alert(
-            "You didn't think this would actually work, did you?\n Just log in with your username and password.",
-          );
+          window.alert("You didn't think this would actually work, did you?");
         }}
       >
         <GitHubLogoIcon className='h-6 w-6' />
-        <span>GitHub</span>
+        <span>Continue With GitHub</span>
       </Button>
     </>
   );
