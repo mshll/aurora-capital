@@ -7,6 +7,9 @@ import { Separator } from '@/components/ui/separator';
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
 import { Button } from '@/components/ui/button';
 import { login } from '@/actions/auth';
+import { toast } from 'sonner';
+import { redirect } from 'next/navigation';
+import { LoaderCircle } from 'lucide-react';
 
 const formSchema = z.object({
   username: z
@@ -27,20 +30,30 @@ const formSchema = z.object({
 });
 
 function LoginForm() {
-  // const [values, setValues] = useState({});
+  const [values, setValues] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <>
       <AutoForm
-        onSubmit={(data, { setError }) => {
-          login(data);
-          // setValues({
-          //   username: '',
-          //   password: '',
-          // });
+        onSubmit={(data) => {
+          setIsLoading(true);
+          login(data).then((res) => {
+            setIsLoading(false);
+            if (!res) {
+              toast.error('Username or password is incorrect, please try again.');
+              setValues({
+                ...values,
+                password: '',
+              });
+            } else {
+              toast.success('Logged in successfully.');
+              redirect('/');
+            }
+          });
         }}
-        // values={values}
-        // onValuesChange={setValues}
+        values={values}
+        onValuesChange={setValues}
         className={'min-w-[20rem]'}
         formSchema={formSchema}
         fieldConfig={{
@@ -52,7 +65,9 @@ function LoginForm() {
           },
         }}
       >
-        <AutoFormSubmit className={'w-full'}>Log in</AutoFormSubmit>
+        <AutoFormSubmit className={'w-full'} disabled={isLoading}>
+          {isLoading ? <LoaderCircle className='h-6 w-6 animate-spin' /> : 'Log In'}
+        </AutoFormSubmit>
       </AutoForm>
       <div className='flex items-center gap-4'>
         <Separator className='flex-1' />
@@ -63,7 +78,12 @@ function LoginForm() {
         variant='outline'
         className='w-full gap-3'
         onClick={() => {
-          window.alert("You didn't think this would actually work, did you?");
+          // window.alert("You didn't think this would actually work, did you?");
+          toast("You didn't think this would actually work, did you?", {
+            action: {
+              label: ':(',
+            },
+          });
         }}
       >
         <GitHubLogoIcon className='h-6 w-6' />

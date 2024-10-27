@@ -4,8 +4,10 @@ import AutoForm, { AutoFormSubmit } from '@/components/ui/auto-form';
 import * as z from 'zod';
 import { DependencyType } from './ui/auto-form/types';
 import { register } from '@/actions/auth';
-import { FormControl, FormDescription, FormItem, FormLabel } from './ui/form';
-import { Switch } from '@radix-ui/react-switch';
+import { useState } from 'react';
+import { toast } from 'sonner';
+import { redirect } from 'next/navigation';
+import { LoaderCircle } from 'lucide-react';
 
 const MAX_FILE_SIZE = 25000000;
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
@@ -59,12 +61,31 @@ const formSchema = z
   });
 
 function RegisterForm() {
+  const [values, setValues] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+
   return (
     <>
       <AutoForm
-        onSubmit={(data, { setError }) => {
-          register(data);
+        onSubmit={(data) => {
+          setIsLoading(true);
+          register(data).then((res) => {
+            setIsLoading(false);
+            if (!res) {
+              toast.error('An error occurred, please try again.');
+              setValues({
+                ...values,
+                password: '',
+                confirm: '',
+              });
+            } else {
+              toast.success('Registered successfully.');
+              redirect('/');
+            }
+          });
         }}
+        values={values}
+        onValuesChange={setValues}
         className={'min-w-[20rem]'}
         formSchema={formSchema}
         fieldConfig={{
@@ -112,7 +133,9 @@ function RegisterForm() {
           },
         ]}
       >
-        <AutoFormSubmit className={'w-full'}>Sign Up</AutoFormSubmit>
+        <AutoFormSubmit className={'w-full'} disabled={isLoading}>
+          {isLoading ? <LoaderCircle className='h-6 w-6 animate-spin' /> : 'Sign Up'}
+        </AutoFormSubmit>
       </AutoForm>
     </>
   );
