@@ -14,6 +14,7 @@ import {
 import { logout } from '@/actions/auth';
 import { myProfile } from '@/actions/users';
 import { baseUrl } from '@/actions/config';
+import { getGreeting } from '@/lib/utils';
 
 async function ProfileMenu() {
   const user = await myProfile();
@@ -25,11 +26,13 @@ async function ProfileMenu() {
     { name: 'Users', href: '/users' },
   ];
 
+  console.log(`${baseUrl}/${user.image}`);
+
   return (
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild className='cursor-pointer'>
-          <Avatar className='h-9 w-9'>
+          <Avatar className='h-9 w-9 border border-border'>
             <AvatarImage src={`${baseUrl}/${user.image}`} alt='ACB' />
             <AvatarFallback>
               <UserIcon className='h-5 w-5' />
@@ -37,7 +40,9 @@ async function ProfileMenu() {
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent className='w-56' align='end'>
-          <DropdownMenuLabel>Hello, {user.username.charAt(0).toUpperCase() + user.username.slice(1)}</DropdownMenuLabel>
+          <DropdownMenuLabel>
+            {getGreeting()}, {user.username.charAt(0).toUpperCase() + user.username.slice(1).toLowerCase()}!
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
           {profileItems.map((item) => (
             <Link key={item.href} href={item.href}>
