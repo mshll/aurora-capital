@@ -1,7 +1,7 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import {
   Dialog,
   DialogClose,
@@ -19,6 +19,7 @@ import { useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { CornerUpRightIcon, Search, UserIcon } from 'lucide-react';
 import TransferForm from './TransferForm';
+import { cn, formatCurrency } from '@/lib/utils';
 
 function GetAllUsers({ baseUrl, users }) {
   const [query, setQuery] = useState('');
@@ -31,7 +32,8 @@ function GetAllUsers({ baseUrl, users }) {
   });
 
   const userList = filteredUsers.map((user) => {
-    const balance = Number.isInteger(user.balance) ? user.balance : user.balance.toFixed(3);
+    const balance = formatCurrency(user.balance);
+
     return (
       <Card key={user._id}>
         <CardContent className='flex items-center justify-start gap-4 px-6 py-6'>
@@ -45,9 +47,9 @@ function GetAllUsers({ baseUrl, users }) {
             <div className='flex flex-col gap-1 overflow-hidden text-ellipsis'>
               <h3 className='overflow-hidden text-ellipsis text-xl font-medium'>{user.username}</h3>
               <p
-                className={`text-sm ${balance > 1000000 ? 'font-semibold text-amber-700 dark:text-amber-500' : 'text-muted-foreground'}`}
+                className={`text-sm ${user.balance > 1000000 ? 'font-semibold text-amber-700 dark:text-amber-500' : 'text-muted-foreground'}`}
               >
-                {balance > 0 ? '$' + balance : 'Broke :('}
+                {user.balance > 0 ? balance : 'Broke :('}
               </p>
             </div>
           </div>
@@ -57,7 +59,7 @@ function GetAllUsers({ baseUrl, users }) {
               <Tooltip>
                 <TooltipTrigger>
                   <DialogTrigger asChild>
-                    <div className='hover:cursor-pointer'>
+                    <div className={cn('h-9 w-9 p-0', buttonVariants({ variant: 'ghost' }))}>
                       <CornerUpRightIcon className='h-5 w-5' />
                     </div>
                   </DialogTrigger>

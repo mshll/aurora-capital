@@ -13,10 +13,12 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
+import { formatCurrency } from '@/lib/utils';
 
 export function NavUser({ user }) {
   const { isMobile } = useSidebar();
   const baseUrl = 'https://react-bank-project.eapi.joincoded.com';
+  const balance = formatCurrency(user.balance);
 
   return (
     <SidebarMenu>
@@ -35,7 +37,7 @@ export function NavUser({ user }) {
               </Avatar>
               <div className='grid flex-1 text-left text-sm leading-tight'>
                 <span className='truncate font-semibold'>{user.username}</span>
-                <span className='truncate text-xs text-muted-foreground'>${user.balance}</span>
+                <span className='truncate text-xs text-muted-foreground'>{balance}</span>
               </div>
               <ChevronsUpDown className='ml-auto size-4' />
             </SidebarMenuButton>
@@ -56,7 +58,7 @@ export function NavUser({ user }) {
                 </Avatar>
                 <div className='grid flex-1 text-left text-sm leading-tight'>
                   <span className='truncate font-semibold'>{user.username}</span>
-                  <span className='truncate text-xs'>${user.balance}</span>
+                  <span className='truncate text-xs'>{balance}</span>
                 </div>
               </div>
             </DropdownMenuLabel>
