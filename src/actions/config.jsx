@@ -2,11 +2,11 @@ import { getToken } from './token';
 
 const baseUrl = 'https://react-bank-project.eapi.joincoded.com';
 
-async function getHeaders() {
+async function getHeaders({ auth = true, contentType = true } = {}) {
   const token = await getToken();
   const headers = new Headers();
-  headers.append('Content-Type', 'application/json');
-  headers.append('Authorization', `Bearer ${token}`);
+  if (contentType) headers.append('Content-Type', 'application/json');
+  if (auth) headers.append('Authorization', `Bearer ${token}`);
 
   return headers;
 }
