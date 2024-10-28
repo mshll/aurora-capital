@@ -29,7 +29,7 @@ import {
 import DepositToAccount from "./Deposit"
 import WithdrawToAccount from "./Withdraw"
 
-async function SelfPay() {
+async function DepositWithdrawWidget() {
 
     return (
     <Tabs defaultValue="account" className="w-[400px]">
@@ -69,4 +69,4 @@ async function SelfPay() {
   )
 }
 
-export default SelfPay
+export default DepositWithdrawWidget
