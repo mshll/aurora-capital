@@ -10,7 +10,7 @@ async function TransactionsPage() {
 
   return (
     <MainLayout>
-      <Transactions transactions={transactions} user={user} />
+      <TransactionTable transactions={transactions} user={user} />
     </MainLayout>
   );
 }
