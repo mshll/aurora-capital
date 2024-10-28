@@ -12,7 +12,7 @@ const DepositToAccount = () => {
         </Label>
         <div className='flex w-full flex-1 gap-4'>
           <Input type='number' name='amount' defaultValue='' placeholder='Enter Amount' className='flex-1' required />
-          <Button type='submit'>Transfer</Button>
+          <Button type='submit'>Deposit</Button>
         </div>
       </form>
     </div>
