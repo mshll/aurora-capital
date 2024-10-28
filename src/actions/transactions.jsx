@@ -10,7 +10,7 @@ export const myTransactions = async () => {
   return users;
 };
 
-export const deposit = async (formData) => {
+export const depositMoney = async (formData) => {
   const userData = Object.fromEntries(formData);
   console.log(userData);
 
@@ -28,7 +28,7 @@ export const deposit = async (formData) => {
   //using this for put method
   //incomplete it has to take the token of the current user so no need of ID parameter
 };
-export const withdraw = async (formData) => {
+export const withdrawMoney = async (formData) => {
   const userData = Object.fromEntries(formData);
   console.log(userData);
   //add try catch?
