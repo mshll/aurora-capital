@@ -99,3 +99,16 @@ body {
 img::selection {
   background: transparent;
 }
+
+.gradient-text::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, #ff7a7a, #ff0000);
+  border-radius: 50%;
+  z-index: -1;
+}
