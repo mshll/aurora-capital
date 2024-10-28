@@ -32,7 +32,7 @@ body {
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.4rem;
+    --radius: 0.6rem;
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -92,23 +92,19 @@ body {
 }
 
 ::selection {
-  background: #00cc9937;
-  color: #007763fd;
+  background: #191834;
+  color: #2b2c68;
 }
 
 img::selection {
   background: transparent;
 }
 
-.gradient-text::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, #ff7a7a, #ff0000);
-  border-radius: 50%;
-  z-index: -1;
+* {
+  -webkit-user-select: none;
+  user-select: none;
+  user-drag: none;
+  -webkit-user-drag: none;
+  app-region: no-drag;
+  -webkit-app-region: no-drag;
 }

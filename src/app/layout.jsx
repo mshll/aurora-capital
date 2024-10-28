@@ -1,7 +1,5 @@
 import './globals.css';
 import localFont from 'next/font/local';
-import NavBar from '@/components/NavBar';
-import Footer from '@/components/Footer';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Cairo } from 'next/font/google';
 import { Toaster } from '@/components/ui/sonner';
@@ -42,13 +40,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang='en' suppressHydrationWarning>
       <body
-        className={`${cairo.className} ${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased`}
+        className={`${cairo.className} ${geistSans.variable} ${geistMono.variable} relative bg-background text-foreground antialiased`}
       >
         <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
-          <NavBar />
-          <main className='flex min-h-[90vh] flex-col items-center justify-center'>{children}</main>
+          {children}
           <Toaster />
-          <Footer />
         </ThemeProvider>
       </body>
     </html>
