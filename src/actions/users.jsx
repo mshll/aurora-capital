@@ -7,7 +7,6 @@ export const getAllUsers = async () => {
     headers: await getHeaders(),
     // body: JSON.stringify(userData),
   });
-
   const users = response.json();
   return users;
 };
