@@ -42,11 +42,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang='en' suppressHydrationWarning>
       <body
-        className={`${cairo.className} ${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased`}
+        className={`${cairo.className} ${geistSans.variable} ${geistMono.variable} relative bg-background text-foreground antialiased`}
       >
         <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
           <NavBar />
-          <main className='flex min-h-[90vh] flex-col items-center justify-center'>{children}</main>
+          <main className='relative flex min-h-screen flex-col items-center justify-center'>{children}</main>
           <Toaster />
           <Footer />
         </ThemeProvider>
