@@ -6,8 +6,6 @@ import { Label } from './ui/label';
 import { Button } from './ui/button';
 
 function TransferForm({ username }) {
-  const form = useForm();
-
   return (
     <form action={(formData) => transfer(formData, username)} className='flex w-full flex-col items-start gap-4'>
       <Label htmlFor='amount' className='text-right'>
