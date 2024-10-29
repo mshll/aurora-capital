@@ -27,6 +27,7 @@ function TransferLinkWidget({ user, users, me }) {
   const [isChecked, setIsChecked] = React.useState(false);
   const [payMeAmount, setPayMeAmount] = React.useState('');
   const [payMeLink, setPayMeLink] = React.useState('');
+  const [isCopied, setIsCopied] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -64,6 +65,18 @@ function TransferLinkWidget({ user, users, me }) {
       toast.success('Link Generated!', {
         description: 'Share the link to receive funds.',
       });
+    }
+  };
+
+  const handleCopy = async (payMeLink) => {
+    try {
+      await navigator.clipboard.writeText(payMeLink);
+      setIsCopied(true);
+      toast.success('Link copied to clipboard!');
+      setTimeout(() => setIsCopied(false), 2000); // Reset copy state after 2 seconds
+    } catch (error) {
+      console.error('Failed to copy:', error);
+      toast.error('Failed to copy link.');
     }
   };
 
@@ -146,6 +159,9 @@ function TransferLinkWidget({ user, users, me }) {
                 <Link href={payMeLink} className='break-words text-blue-500'>
                   {payMeLink}
                 </Link>
+                <Button onClick={() => handleCopy(payMeLink)} variant="outline">
+                  {isCopied ? 'Copied!' : 'Copy Link'}
+                </Button>
               </div>
             )}
           </CardContent>
