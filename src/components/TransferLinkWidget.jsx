@@ -24,6 +24,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "./ui/textarea"
 import { Checkbox } from "./ui/checkbox"
+import Link from "next/link"
 import {
   Tabs,
   TabsContent,
@@ -70,7 +71,7 @@ function TransferLinkWidget({ me, users }) {
 
   const handleGeneratePayMeLink = () => {
     if (payMeAmount) {
-      const link = `${window.location.origin}/transfer?accountId=${me.username}&amount=${payMeAmount}`;
+      const link = `${window.location.origin}/transfer/${me.username}?amount=${payMeAmount}`;
       setPayMeLink(link);
       toast.success("Link Generated!", {
         description: "Share the link to receive funds.",
@@ -79,7 +80,7 @@ function TransferLinkWidget({ me, users }) {
   };
 
   return (
-    <Tabs defaultValue="account" className="w-[400px]">
+    <Tabs defaultValue="account" className="w-[500px]">
       <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger value="account">Transfer</TabsTrigger>
         <TabsTrigger value="password">Pay Me</TabsTrigger>
@@ -90,7 +91,7 @@ function TransferLinkWidget({ me, users }) {
             <CardTitle>Transfer funds to a beneficiary</CardTitle>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="flex flex-col justify-evenly gap-5">
+            <form onSubmit={handleSubmit} className="flex flex-col justify-evenly space-y-5">
               <Select
                 value={selectedBeneficiary}
                 onValueChange={(value) => setSelectedBeneficiary(value)}
@@ -156,7 +157,7 @@ function TransferLinkWidget({ me, users }) {
           <CardHeader>
             <CardTitle>Generate a link to receive funds</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-2">
+          <CardContent className="space-y-5">
           <Input
               type="number"
               placeholder="Enter amount"
@@ -169,9 +170,9 @@ function TransferLinkWidget({ me, users }) {
               Generate Link
             </Button>
             {payMeLink && (
-              <div className="mt-4">
+              <div className="mt-4 flex flex-col gap-5">
                 <Label>Share this link to receive funds:</Label>
-                <p className="break-words text-blue-600">{payMeLink}</p>
+                <Link href={payMeLink} className="text-blue-500 break-words">{payMeLink}</Link>
               </div>
             )}
           </CardContent>
