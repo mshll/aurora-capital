@@ -32,6 +32,7 @@ export default async function Home() {
           </div>
         </HeroBg>
       </div>
+      <script async src='https://api.cronbot.ai/v1/widgets/app/app_mdcq1d67btpv'></script>
     </MainLayout>
   );
 }
