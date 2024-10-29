@@ -17,9 +17,11 @@ export function getGreeting() {
   }
 }
 
-export function formatCurrency(amount) {
-  return new Intl.NumberFormat('en-US', {
+export function formatCurrency(amount, locale = 'de-US') {
+  const formatted = new Intl.NumberFormat(locale, {
     style: 'currency',
-    currency: 'USD',
+    currency: 'KWD',
   }).format(amount);
+
+  return locale.includes('de') ? formatted.replace(/,/g, '#').replace(/\./g, ',').replace(/#/g, '.') : formatted;
 }

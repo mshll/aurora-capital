@@ -13,9 +13,9 @@ async function TransactionsPage() {
   const allUsers = await getAllUsers();
 
   return (
+    // <TransactionTable transactions={transactions} user={user} />
     <MainLayout>
-      {/* <TransactionTable transactions={transactions} user={user} /> */}
-      <TransferLinkWidget user={user} allUsers={allUsers} me={me}/>
+      <TransferLinkWidget user={user} me={me} users={allUsers} />
     </MainLayout>
   );
 }
