@@ -1,4 +1,6 @@
 'use server';
+
+import { revalidatePath } from 'next/cache';
 import { baseUrl, getHeaders } from './config';
 
 export const getAllUsers = async () => {
@@ -10,6 +12,7 @@ export const getAllUsers = async () => {
   const users = response.json();
   return users;
 };
+
 export const myProfile = async () => {
   const response = await fetch(`${baseUrl}/mini-project/api/auth/me`, {
     // method: 'get',
@@ -19,18 +22,25 @@ export const myProfile = async () => {
   const users = response.json();
   return users;
 };
-export const updateProfile = async (formData) => {
+
+export const updateProfile = async ({ image }) => {
+  const formData = new FormData();
+  formData.append('image', image);
+  console.log(formData);
+
   try {
     const response = await fetch(`${baseUrl}/mini-project/api/auth/profile`, {
       method: 'PUT',
-      headers: await getHeaders(),
+      headers: await getHeaders({ contentType: false }),
       body: formData,
     });
-    console.log(formData);
-    return await response.json();
+
+    const result = await response.json();
+    revalidatePath('/profile');
+    return !result.success; // because if successfull result won't have 'success' key
   } catch (error) {
     console.error('Profile update error:', error);
-    return { success: false };
+    return false;
   }
 };
 

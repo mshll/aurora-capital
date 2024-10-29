@@ -11,12 +11,12 @@ async function AuthButtons() {
   return (
     <>
       <Link href='/login'>
-        <Button variant='outline' size='sm'>
+        <Button variant='ghost' size='sm'>
           Log in
         </Button>
       </Link>
       <Link href='/register'>
-        <Button variant='secondary' size='sm'>
+        <Button variant='default' size='sm'>
           Sign up
         </Button>
       </Link>

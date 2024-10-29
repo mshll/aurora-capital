@@ -1,5 +1,6 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import { baseUrl, getHeaders } from './config';
 
 export const myTransactions = async () => {
@@ -54,5 +55,5 @@ export const transfer = async (formData, username) => {
     body: JSON.stringify(userData),
   });
 
-  console.log(await response.json());
+  revalidatePath('/users');
 };

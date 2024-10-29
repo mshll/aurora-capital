@@ -48,7 +48,7 @@ function LoginForm() {
               });
             } else {
               toast.success('Logged in successfully.');
-              redirect('/');
+              redirect('/dashboard');
             }
           });
         }}

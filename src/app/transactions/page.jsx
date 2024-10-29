@@ -1,5 +1,6 @@
 import { getUser } from '@/actions/token';
 import { myTransactions } from '@/actions/transactions';
+import MainLayout from '@/components/MainLayout';
 import Transactions from '@/components/Transactions';
 import TransactionTable from '@/components/TransactionTable';
 import TransferLinkWidget from '@/components/TransferLinkWidget';
@@ -12,10 +13,11 @@ async function TransactionsPage() {
   const allUsers = await getAllUsers();
 
   return (
-  // <TransactionTable transactions={transactions} user={user} />
-  <TransferLinkWidget me={me} users={allUsers} />
-  )
-
+    <MainLayout>
+      {/* <TransactionTable transactions={transactions} user={user} /> */}
+      <TransferLinkWidget user={user} allUsers={allUsers} me={me}/>
+    </MainLayout>
+  );
 }
 
 export default TransactionsPage;

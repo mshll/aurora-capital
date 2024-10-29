@@ -9,25 +9,27 @@ import siteLogo from '@/images/logo.svg';
 function NavBar() {
   const navItems = [
     { name: 'Home', href: '/' },
-    { name: 'About Us', href: '/about' },
+    { name: 'About Us', href: '/aboutUs' },
     { name: 'Contact', href: '/contact' },
     // { name: 'Profile', href: '/profile' },
   ];
 
   return (
-    <header className='sticky top-0 w-full border-b border-border bg-background'>
+    <header className='fixed top-0 z-50 w-full border-b border-border/80 bg-background/80 backdrop-blur-lg backdrop-filter'>
       <nav className='container mx-auto flex items-center justify-between p-3'>
-        <Link href='/' className='flex items-center justify-center space-x-2'>
-          <Image src={siteLogo} alt='Logo' width={64} height={64} className='mb-4 dark:invert' />
-        </Link>
-        <div className='flex flex-1 items-center justify-center space-x-4'>
+        <div className='flex flex-1 items-center justify-start space-x-2'>
+          <Link href='/' className=''>
+            <Image src={siteLogo} alt='Logo' width={64} height={64} className='mb-4 dark:invert' />
+          </Link>
+        </div>
+        <div className='flex items-center justify-center space-x-4'>
           {navItems.map((item) => (
             <NavLink key={item.href} href={item.href}>
               {item.name}
             </NavLink>
           ))}
         </div>
-        <div className='flex items-center justify-center space-x-4'>
+        <div className='flex flex-1 items-center justify-end space-x-4'>
           <AuthButtons />
           <ThemeToggler />
         </div>
