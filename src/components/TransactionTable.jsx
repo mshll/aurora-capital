@@ -2,7 +2,7 @@
 
 import { ArrowDownIcon, ArrowUpIcon, CalendarIcon, DollarSign, MoreHorizontal, Search } from 'lucide-react';
 import { format, parseISO, isSameDay } from 'date-fns';
-import { cn } from '@/lib/utils';
+import { cn, formatCurrency } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
@@ -84,24 +84,24 @@ function TransactionTable({ transactions, user }) {
     if (transaction.type === 'transfer' && transaction.from === user._id) isRed = true;
     if (transaction.type === 'withdraw') isRed = true;
 
-    const amount = Number.isInteger(transaction.amount) ? transaction.amount : transaction.amount.toFixed(3);
+    const amount = formatCurrency(transaction.amount);
 
     return (
       <TableRow key={transaction._id} className='h-16'>
-        <TableCell className='text-left text-lg'>
+        <TableCell className='text-md text-left'>
           {format(parseISO(transaction.createdAt), 'MMMM dd, yyyy, hh:mm a')}
         </TableCell>
-        <TableCell className='w-1/4 text-center text-lg'>
+        <TableCell className='text-md w-1/4 text-start'>
           {transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1)}
         </TableCell>
-        <TableCell className='w-1/4 text-center text-lg'>
+        <TableCell className='text-md w-1/4 text-start'>
           <span className={isRed ? 'text-red-500' : 'text-green-500'}>
             {isRed ? (
               <ArrowDownIcon className='mr-1 inline h-5 w-5' />
             ) : (
               <ArrowUpIcon className='mr-1 inline h-5 w-5' />
             )}
-            ${amount}
+            {amount}
           </span>
         </TableCell>
       </TableRow>
@@ -109,85 +109,88 @@ function TransactionTable({ transactions, user }) {
   });
 
   return (
-    <div className='no-scrollbar h-full overflow-hidden rounded-lg border bg-card px-6 text-card-foreground shadow-sm'>
-      {/* Sticky container for the title and filter/search bar */}
-      <div className='sticky top-0 z-10 flex flex-col gap-2 gap-y-2 bg-card pb-5 pt-5 shadow-md'>
-        <h3 className='text-left text-lg font-semibold leading-none tracking-tight'>Recent Transactions</h3>
-        <div className='flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-x-2 sm:space-y-0'>
-          <div className='relative flex-1'>
-            <Search className='absolute left-2.5 top-3 h-4 w-4 text-muted-foreground' />
-            <Input
-              placeholder='Search for a transaction'
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              className='text-md h-10 pl-8'
-            />
+    <div className=''>
+      <div className='no-scrollbar h-full overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm'>
+        {/* Sticky container for the title and filter/search bar */}
+        <div className='sticky top-0 z-10 flex flex-col gap-1 bg-card px-5 pt-3 shadow-md'>
+          <div className='flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-x-2 sm:space-y-0'>
+            <div className='relative'>
+              <Search className='absolute left-2.5 top-3 h-4 w-4 text-muted-foreground' />
+              <Input
+                placeholder='Search for a transaction'
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className='h-10 pl-8 text-sm'
+              />
+            </div>
+
+            <div className='flex gap-4'>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant={'outline'}
+                    className={cn('justify-start text-left text-sm font-normal', !date && 'text-muted-foreground')}
+                  >
+                    <CalendarIcon className='mr-2 h-5 w-5' />
+                    {date ? format(date, 'MMMM dd, yyyy') : 'Filter by date'}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className='w-full p-0' align='start'>
+                  <Calendar mode='single' selected={date} onSelect={(newDate) => setDate(newDate)} initialFocus />
+                </PopoverContent>
+              </Popover>
+
+              <Select value={filter} onValueChange={setFilter}>
+                <SelectTrigger className='h-auto w-full text-sm text-muted-foreground sm:w-[180px]'>
+                  <SelectValue placeholder='Filter by type' />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value='all'>All Transactions</SelectItem>
+                  <SelectItem value='withdraw'>Withdrawals</SelectItem>
+                  <SelectItem value='deposit'>Deposits</SelectItem>
+                  <SelectItem value='transfer'>Transfers</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
-
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant={'outline'}
-                className={cn('text-md justify-start text-left font-normal', !date && 'text-muted-foreground')}
-              >
-                <CalendarIcon className='mr-2 h-5 w-5' />
-                {date ? format(date, 'MMMM dd, yyyy') : 'Filter by date'}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className='w-full p-0' align='start'>
-              <Calendar mode='single' selected={date} onSelect={(newDate) => setDate(newDate)} initialFocus />
-            </PopoverContent>
-          </Popover>
-
-          <Select value={filter} onValueChange={setFilter}>
-            <SelectTrigger className='text-md h-auto w-full text-muted-foreground sm:w-[180px]'>
-              <SelectValue placeholder='Filter by type' />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value='all'>All Transactions</SelectItem>
-              <SelectItem value='withdraw'>Withdrawals</SelectItem>
-              <SelectItem value='deposit'>Deposits</SelectItem>
-              <SelectItem value='transfer'>Transfers</SelectItem>
-            </SelectContent>
-          </Select>
         </div>
-      </div>
 
-      <div className='no-scrollbar mt-4 max-h-[400px] overflow-y-auto'>
-        <Table>
-          <TableHeader className='sticky top-0 z-10 bg-card' ref={headerRef}>
-            <TableRow className='h-12'>
-              <TableHead
-                className={cn(
-                  'cursor-pointer text-left text-lg transition-colors',
-                  sortField === 'date' ? 'bg-gray-300 text-gray-800' : 'hover:bg-gray-200 hover:text-gray-800',
-                )}
-                onClick={() => toggleSort('date')}
-              >
-                Date
-              </TableHead>
-              <TableHead
-                className={cn(
-                  'cursor-pointer text-center text-lg transition-colors',
-                  sortField === 'type' ? 'bg-gray-300 text-gray-800' : 'hover:bg-gray-200 hover:text-gray-800',
-                )}
-                onClick={() => toggleSort('type')}
-              >
-                Type
-              </TableHead>
-              <TableHead
-                className={cn(
-                  'cursor-pointer text-center text-lg transition-colors',
-                  sortField === 'amount' ? 'bg-gray-300 text-gray-800' : 'hover:bg-gray-200 hover:text-gray-800',
-                )}
-                onClick={() => toggleSort('amount')}
-              >
-                Amount
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>{transactionList}</TableBody>
-        </Table>
+        <div className='no-scrollbar mx-6 mt-4 max-h-[400px] overflow-y-auto'>
+          <Table>
+            <TableHeader className='sticky top-0 z-10 bg-card' ref={headerRef}>
+              <TableRow className='h-12'>
+                <TableHead
+                  className={cn(
+                    'text-md cursor-pointer text-left transition-colors',
+                    sortField === 'date' ? 'bg-muted-foreground text-gray-800' : 'hover:bg-muted',
+                  )}
+                  onClick={() => toggleSort('date')}
+                >
+                  Date
+                </TableHead>
+                <TableHead
+                  className={cn(
+                    'text-md cursor-pointer text-start transition-colors',
+                    sortField === 'type' ? 'bg-muted-foreground text-gray-800' : 'hover:bg-muted',
+                  )}
+                  onClick={() => toggleSort('type')}
+                >
+                  Type
+                </TableHead>
+                <TableHead
+                  className={cn(
+                    'text-md cursor-pointer text-start transition-colors',
+                    sortField === 'amount' ? 'bg-muted-foreground text-gray-800' : 'hover:bg-muted',
+                  )}
+                  onClick={() => toggleSort('amount')}
+                >
+                  Amount
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>{transactionList}</TableBody>
+          </Table>
+        </div>
       </div>
     </div>
   );

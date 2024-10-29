@@ -13,10 +13,11 @@ async function TransactionsPage() {
   const allUsers = await getAllUsers();
 
   return (
-  // <TransactionTable transactions={transactions} user={user} />
-  <TransferLinkWidget me={me} users={allUsers} />
-  )
-
+    // <TransactionTable transactions={transactions} user={user} />
+    <MainLayout>
+      <TransferLinkWidget user={user} me={me} users={allUsers} />
+    </MainLayout>
+  );
 }
 
 export default TransactionsPage;

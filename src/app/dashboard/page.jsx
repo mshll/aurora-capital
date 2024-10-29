@@ -10,12 +10,24 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
+import { buttonVariants } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { cn } from '@/lib/utils';
+import { Maximize2 } from 'lucide-react';
+import Link from 'next/link';
 
 export default async function DashboardPage() {
   const user = await myProfile();
-  const transactions = await myTransactions();
+  const transactions = await myTransactions().then((data) => {
+    return data.map((transaction) => {
+      let isNegative = false;
+      if (transaction.type === 'transfer' && transaction.from === user._id) isNegative = true;
+      if (transaction.type === 'withdraw') isNegative = true;
+      const newTransaction = { ...transaction, amount: isNegative ? -transaction.amount : transaction.amount };
+      return newTransaction;
+    });
+  });
 
   return (
     <SidebarProvider>
@@ -44,8 +56,16 @@ export default async function DashboardPage() {
             <div className='aspect-video rounded-xl bg-muted/50' />
             <div className='aspect-video rounded-xl bg-muted/50' />
           </div>
-          <div className='min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min'>
-            <TransactionTable transactions={transactions} user={user} />
+          <div className='min-h-[100vh] flex-1 rounded-xl md:min-h-min'>
+            <div className='container mx-auto'>
+              <div className='mb-3 flex w-full items-center justify-between px-2'>
+                <h2 className='text-xl font-semibold'>Recent Transactions</h2>
+                <Link className={cn(buttonVariants({ variant: 'ghost' }), 'h-8 w-8 p-0')} href={'/transactions'}>
+                  <Maximize2 className='h-4 w-4' />
+                </Link>
+              </div>
+              <TransactionTable transactions={transactions} user={user} />
+            </div>
           </div>
         </div>
       </SidebarInset>
