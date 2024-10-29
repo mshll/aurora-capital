@@ -146,7 +146,7 @@ const data = {
   ],
 };
 
-export function AppSidebar({ user, ...props }) {
+export function AppSidebar({ user, me, ...props }) {
   return (
     <Sidebar variant='inset' {...props}>
       <SidebarHeader>
@@ -156,7 +156,7 @@ export function AppSidebar({ user, ...props }) {
               <Tooltip>
                 <SidebarMenuButton size='lg' asChild>
                   <TooltipTrigger asChild>
-                    <Link href='/'>
+                    <Link href='/dashboard'>
                       <div className='flex aspect-square size-8 items-center justify-center'>
                         <Image src={siteLogo} alt='Logo' width={64} height={64} className='mb-2 dark:invert' />
                       </div>
@@ -181,7 +181,7 @@ export function AppSidebar({ user, ...props }) {
         <NavSecondary items={data.navSecondary} className='mt-auto' />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={user} />
+        <NavUser user={user} me={me} />
       </SidebarFooter>
     </Sidebar>
   );

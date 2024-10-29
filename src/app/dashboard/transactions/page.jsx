@@ -13,10 +13,12 @@ async function TransactionsPage() {
   const allUsers = await getAllUsers();
 
   return (
-    // <TransactionTable transactions={transactions} user={user} />
-    <MainLayout>
-      <TransferLinkWidget user={user} me={me} users={allUsers} />
-    </MainLayout>
+    <div className='flex w-full auto-cols-auto auto-rows-min items-stretch gap-4'>
+      <TransactionTable transactions={transactions} user={user} />
+    </div>
+    // <MainLayout>
+    //   <TransferLinkWidget user={user} me={me} users={allUsers} />
+    // </MainLayout>
   );
 }
 

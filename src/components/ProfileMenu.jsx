@@ -26,8 +26,6 @@ async function ProfileMenu() {
     { name: 'Users', href: '/users' },
   ];
 
-  console.log(`${baseUrl}/${user.image}`);
-
   return (
     <>
       <DropdownMenu>

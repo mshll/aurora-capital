@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import * as React from 'react';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { ChevronsUpDown } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -21,9 +21,10 @@ import Link from 'next/link';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { transfer } from '@/actions/transactions';
 import { toast } from 'sonner';
+import PayCard from './PayCard';
 
-function TransferLinkWidget({ user, users, me }) {
-  const [selectedBeneficiary, setSelectedBeneficiary] = React.useState('');
+function TransferLinkWidget({ user, users, me, defaultTab = 'transfer', minTransfer = false, className, ...props }) {
+  const [selectedBeneficiary, setSelectedBeneficiary] = useState();
   const [isChecked, setIsChecked] = React.useState(false);
   const [payMeAmount, setPayMeAmount] = React.useState('');
   const [payMeLink, setPayMeLink] = React.useState('');
@@ -60,98 +61,102 @@ function TransferLinkWidget({ user, users, me }) {
   const handleGeneratePayMeLink = () => {
     if (payMeAmount) {
       const link = `${window.location.origin}/transfer?userid=${user._id}&username=${me.username}&amount=${payMeAmount}`;
-      setPayMeLink(link);
-      toast.success('Link Generated!', {
-        description: 'Share the link to receive funds.',
+      navigator.clipboard.writeText(link);
+      toast.success('Pay Me Link Generated!', {
+        description: 'Link copied to clipboard, share it to receive funds.',
+        action: {
+          label: 'Open Link',
+          onClick: () => window.open(link, '_blank'),
+        },
       });
     }
   };
 
   return (
-    <Tabs defaultValue='account' className='w-[500px]'>
-      <TabsList className='grid w-full grid-cols-2'>
-        <TabsTrigger value='account'>Transfer</TabsTrigger>
-        <TabsTrigger value='password'>Pay Me</TabsTrigger>
-      </TabsList>
-      <TabsContent value='account'>
-        <Card>
-          <CardHeader>
-            <CardTitle>Transfer funds to a beneficiary</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className='flex flex-col justify-evenly space-y-5'>
-              <Select value={selectedBeneficiary} onValueChange={(value) => setSelectedBeneficiary(value)} required>
-                <SelectTrigger>
-                  <SelectValue placeholder='Select a Beneficiary'>
-                    {selectedBeneficiary || 'Select a Beneficiary'}
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup label='Beneficiaries'>
-                    {users.map((user, index) => (
-                      <SelectItem key={`adshjkgadshj${index}`} value={user.username}>
-                        {' '}
-                        {user.username}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+    <div className={className} {...props}>
+      <Tabs defaultValue={defaultTab}>
+        <TabsList className='grid w-full grid-cols-2'>
+          <TabsTrigger value='transfer'>Transfer</TabsTrigger>
+          <TabsTrigger value='pay-me'>Pay Me</TabsTrigger>
+        </TabsList>
+        <TabsContent value='transfer'>
+          {!minTransfer ? (
+            <Card>
+              <CardHeader>
+                <CardTitle>Transfer funds to a beneficiary</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSubmit} className='flex flex-col justify-evenly space-y-5'>
+                  <Select value={selectedBeneficiary} onValueChange={(value) => setSelectedBeneficiary(value)} required>
+                    <SelectTrigger>
+                      <SelectValue placeholder='Select a Beneficiary'>
+                        {users.find((user) => user._id === selectedBeneficiary)?.username || 'Select a Beneficiary'}
+                      </SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup label='Beneficiaries'>
+                        {users.map((user) => (
+                          <SelectItem key={user._id} value={user._id}>
+                            {user.username}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
 
-              <div className='flex flex-row items-center justify-between'>
-                <Input className='w-3/4' type='number' placeholder='Amount' name='amount' min='1' required />
-                <p>KWD</p>
-              </div>
+                  <div className='flex flex-row items-center justify-between'>
+                    <Input className='w-3/4' type='number' placeholder='Amount' name='amount' min='1' required />
+                    <p>KWD</p>
+                  </div>
 
-              <Textarea placeholder='Purpose of transfer' />
+                  <Textarea placeholder='Purpose of transfer' />
 
-              <div className='flex items-center space-x-2 p-1 pb-2 pt-2'>
-                <Checkbox id='terms' checked={isChecked} onClick={(e) => setIsChecked(!isChecked)} />
-                <label
-                  htmlFor='terms'
-                  className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
-                >
-                  Accept terms and conditions
-                </label>
-              </div>
+                  <div className='flex items-center space-x-2 p-1 pb-2 pt-2'>
+                    <Checkbox id='terms' checked={isChecked} onClick={(e) => setIsChecked(!isChecked)} />
+                    <label
+                      htmlFor='terms'
+                      className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                    >
+                      Accept terms and conditions
+                    </label>
+                  </div>
 
-              <Button type='submit' variant='outline'>
-                Transfer
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
-      </TabsContent>
+                  <Button type='submit' variant='outline'>
+                    Transfer
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+          ) : (
+            // Minimized transfer card
+            <Card>
+              <CardHeader>
+                <CardTitle>Transfer funds to a beneficiary</CardTitle>
+                <CardDescription>Visit the transfer page to transfer funds to a beneficiary.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className='flex flex-col items-end justify-center gap-y-4 pt-6'>
+                  <Link type='submit' className={buttonVariants({ variant: 'secondary' })} href='/dashboard/transfer'>
+                    Go to transfer page
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+        </TabsContent>
 
-      <TabsContent value='password'>
-        <Card>
-          <CardHeader>
-            <CardTitle>Generate a link to receive funds</CardTitle>
-          </CardHeader>
-          <CardContent className='space-y-5'>
-            <Input
-              type='number'
-              placeholder='Enter amount'
-              value={payMeAmount}
-              onChange={(e) => setPayMeAmount(e.target.value)}
-              min='1'
-              className='w-full'
-            />
-            <Button variant='outline' onClick={handleGeneratePayMeLink}>
-              Generate Link
-            </Button>
-            {payMeLink && (
-              <div className='mt-4 flex flex-col gap-5'>
-                <Label>Share this link to receive funds:</Label>
-                <Link href={payMeLink} className='break-words text-blue-500'>
-                  {payMeLink}
-                </Link>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </TabsContent>
-    </Tabs>
+        <TabsContent value='pay-me'>
+          <PayCard
+            title='Generate a link to receive funds'
+            inputLabel='Enter amount'
+            buttonText='Generate Link'
+            onSubmit={handleGeneratePayMeLink}
+            inputVal={payMeAmount}
+            setInputVal={setPayMeAmount}
+          />
+        </TabsContent>
+      </Tabs>
+    </div>
   );
 }
 

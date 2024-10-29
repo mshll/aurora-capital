@@ -38,9 +38,6 @@ function TransferPageWidget({ user }) {
     router.push(newUrl);
   };
 
-  console.log('user:', user._id);
-  console.log('userID:', userID);
-
   if (user._id !== userID) {
     <Card className='w-[350px]'>
       <CardHeader>

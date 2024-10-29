@@ -87,7 +87,7 @@ function TransactionTable({ transactions, user }) {
     const amount = formatCurrency(transaction.amount);
 
     return (
-      <TableRow key={transaction._id} className='h-16'>
+      <TableRow key={transaction._id} className='w h-16'>
         <TableCell className='text-md text-left'>
           {format(parseISO(transaction.createdAt), 'MMMM dd, yyyy, hh:mm a')}
         </TableCell>
@@ -109,10 +109,10 @@ function TransactionTable({ transactions, user }) {
   });
 
   return (
-    <div className=''>
-      <div className='no-scrollbar h-full overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm'>
+    <div className='h-full w-full'>
+      <div className='no-scrollbar h-full overflow-hidden rounded-lg border bg-card text-card-foreground'>
         {/* Sticky container for the title and filter/search bar */}
-        <div className='sticky top-0 z-10 flex flex-col gap-1 bg-card px-5 pt-3 shadow-md'>
+        <div className='sticky top-0 z-10 flex flex-col gap-1 bg-card px-5 pt-3'>
           <div className='flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-x-2 sm:space-y-0'>
             <div className='relative'>
               <Search className='absolute left-2.5 top-3 h-4 w-4 text-muted-foreground' />
@@ -155,7 +155,7 @@ function TransactionTable({ transactions, user }) {
           </div>
         </div>
 
-        <div className='no-scrollbar mx-6 mt-4 max-h-[400px] overflow-y-auto'>
+        <div className='no-scrollbar mx-6 mt-4 max-h-[calc(100vh-29rem)] overflow-y-auto'>
           <Table>
             <TableHeader className='sticky top-0 z-10 bg-card' ref={headerRef}>
               <TableRow className='h-12'>

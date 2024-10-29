@@ -69,7 +69,13 @@ function RegisterForm() {
       <AutoForm
         onSubmit={(data) => {
           setIsLoading(true);
-          register(data).then((res) => {
+          const promise = register(data);
+
+          toast.promise(promise, {
+            loading: 'Registering...',
+          });
+
+          promise.then((res) => {
             setIsLoading(false);
             if (!res) {
               toast.error('An error occurred, please try again.');

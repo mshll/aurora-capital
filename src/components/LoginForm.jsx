@@ -38,7 +38,13 @@ function LoginForm() {
       <AutoForm
         onSubmit={(data) => {
           setIsLoading(true);
-          login(data).then((res) => {
+          const promise = login(data);
+
+          toast.promise(promise, {
+            loading: 'Logging in...',
+          });
+
+          promise.then((res) => {
             setIsLoading(false);
             if (!res) {
               toast.error('Username or password is incorrect, please try again.');

@@ -21,7 +21,7 @@ import { CornerUpRightIcon, Search, UserIcon } from 'lucide-react';
 import TransferForm from './TransferForm';
 import { cn, formatCurrency } from '@/lib/utils';
 
-function GetAllUsers({ baseUrl, users }) {
+function GetAllUsers({ baseUrl, users, colsNum = 2 }) {
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState('all');
 
@@ -92,35 +92,20 @@ function GetAllUsers({ baseUrl, users }) {
   });
 
   return (
-    <div className='flex h-full flex-1 flex-col items-center justify-center gap-16 p-8 pb-20 sm:p-20'>
-      <div className='no-scrollbar h-[500px] w-[900px] overflow-y-auto rounded-lg border bg-card p-6 text-card-foreground shadow-sm'>
-        <div className='mb-6 flex w-full items-center justify-center gap-2'>
-          <h3 className='flex-1 text-2xl font-semibold leading-none tracking-tight'>User List</h3>
-          <div className='flex flex-1 flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-x-2 sm:space-y-0'>
-            <div className='relative w-full'>
-              <Search className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
-              <Input
-                placeholder='Search for a user'
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                className='pl-8'
-              />
-            </div>
-
-            {/* <Select value={filter} onValueChange={setFilter}>
-              <SelectTrigger className='w-full sm:w-[180px]'>
-                <SelectValue placeholder='Filter by status' />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value='all'>All Users</SelectItem>
-                <SelectItem value='active'>Active</SelectItem>
-                <SelectItem value='inactive'>Inactive</SelectItem>
-              </SelectContent>
-            </Select> */}
-          </div>
-        </div>
-        <div className='flex flex-col space-y-4'>
-          <div className='grid gap-4 md:grid-cols-1 lg:grid-cols-2'>{userList}</div>
+    <div className='overflow-hidden rounded-lg border bg-card p-6 text-card-foreground shadow-sm'>
+      <div className='relative mb-4 w-full'>
+        <Search className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
+        <Input
+          placeholder='Search for a user'
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className='pl-8'
+        />
+      </div>
+      <div className='no-scrollbar mb-10 flex size-full flex-col space-y-4 overflow-auto'>
+        <div className={`grid gap-4 md:grid-cols-2 lg:grid-cols-${colsNum}`}>
+          {userList}
+          <span className='col-span-full'>&nbsp;</span>
         </div>
       </div>
     </div>
