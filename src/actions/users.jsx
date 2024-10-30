@@ -9,8 +9,9 @@ export const getAllUsers = async () => {
     headers: await getHeaders(),
     // body: JSON.stringify(userData),
   });
-  const users = response.json();
-  return users;
+  const users = await response.json();
+  console.log(users);
+  return users.reverse();
 };
 
 export const myProfile = async () => {
@@ -19,8 +20,8 @@ export const myProfile = async () => {
     headers: await getHeaders(),
     // body: JSON.stringify(userData),
   });
-  const users = response.json();
-  return users;
+  const user = response.json();
+  return user;
 };
 
 export const updateProfile = async ({ image }) => {

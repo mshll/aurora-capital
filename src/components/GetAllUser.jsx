@@ -87,7 +87,7 @@ function GetAllUsers({ baseUrl, users, singleCol = false }) {
 
                 <Button variant={'secondary'}>
                   <label htmlFor='submit-transfer-form' tabIndex='0'>
-                    Continue
+                    Transfer
                   </label>
                 </Button>
               </DialogFooter>
