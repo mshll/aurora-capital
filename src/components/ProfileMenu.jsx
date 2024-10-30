@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { UserIcon } from 'lucide-react';
+import { BadgeCheck, LayoutDashboard, LogOutIcon, UserIcon } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import {
@@ -20,13 +20,11 @@ async function ProfileMenu() {
   const user = await myProfile();
 
   const profileItems = [
-    { name: 'Profile', href: '/profile' },
-    { name: 'Dashboard', href: '/dashboard' },
-    { name: 'Transactions', href: '/transactions' },
-    { name: 'Users', href: '/users' },
+    { name: 'My Account', href: '/profile', icon: <BadgeCheck /> },
+    { name: 'View Dashboard', href: '/dashboard', icon: <LayoutDashboard /> },
+    // { name: 'Transactions', href: '/transactions' },
+    // { name: 'Users', href: '/users' },
   ];
-
-  console.log(`${baseUrl}/${user.image}`);
 
   return (
     <>
@@ -46,11 +44,15 @@ async function ProfileMenu() {
           <DropdownMenuSeparator />
           {profileItems.map((item) => (
             <Link key={item.href} href={item.href}>
-              <DropdownMenuItem>{item.name}</DropdownMenuItem>
+              <DropdownMenuItem>
+                {/* {item.icon} */}
+                {item.name}
+              </DropdownMenuItem>
             </Link>
           ))}
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={logout} className='cursor-pointer text-destructive'>
+            {/* <LogOutIcon /> */}
             Logout
           </DropdownMenuItem>
         </DropdownMenuContent>
