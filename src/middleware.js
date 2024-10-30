@@ -7,7 +7,7 @@ const publicRoutes = ['/login', '/register'];
 export default async function middleware(req) {
   const path = req.nextUrl.pathname;
   const isPublicRoute = publicRoutes.includes(path);
-  const isPrivateRoute = privateRoutes.includes(path);
+  const isPrivateRoute = privateRoutes.includes(path) || path.startsWith('/dashboard');
   const user = await getUser();
 
   // Redirect to `/login` if a page is private!

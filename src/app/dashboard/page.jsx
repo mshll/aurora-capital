@@ -1,24 +1,22 @@
+import { baseUrl } from '@/actions/config';
+import { getUser } from '@/actions/token';
 import { myTransactions } from '@/actions/transactions';
-import { myProfile } from '@/actions/users';
-import { AppSidebar } from '@/components/dashboard/app-sidebar';
+import { getAllUsers, myProfile } from '@/actions/users';
+import { DataTable } from '@/components/DataTable';
+import DepositWithdrawWidget from '@/components/DepositWithdrawWidget';
+import GetAllUsers from '@/components/GetAllUser';
 import TransactionTable from '@/components/TransactionTable';
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
+import TransferLinkWidget from '@/components/TransferLinkWidget';
 import { buttonVariants } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { cn } from '@/lib/utils';
 import { Maximize2 } from 'lucide-react';
 import Link from 'next/link';
 
 export default async function DashboardPage() {
-  const user = await myProfile();
+  const me = await myProfile();
+  const user = await getUser();
+  const allUsers = await getAllUsers();
+
   const transactions = await myTransactions().then((data) => {
     return data.map((transaction) => {
       let isNegative = false;
@@ -30,45 +28,39 @@ export default async function DashboardPage() {
   });
 
   return (
-    <SidebarProvider>
-      <AppSidebar user={user} />
-      <SidebarInset>
-        <header className='flex h-16 shrink-0 items-center gap-2'>
-          <div className='flex items-center gap-2 px-4'>
-            <SidebarTrigger className='-ml-1' />
-            <Separator orientation='vertical' className='mr-2 h-4' />
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem className='hidden md:block'>
-                  <BreadcrumbLink href='/'>Home</BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator className='hidden md:block' />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Dashboard</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
-          </div>
-        </header>
-        <div className='flex flex-1 flex-col gap-4 p-4 pt-0'>
-          <div className='grid auto-rows-min gap-4 md:grid-cols-3'>
-            <div className='aspect-video rounded-xl bg-muted/50' />
-            <div className='aspect-video rounded-xl bg-muted/50' />
-            <div className='aspect-video rounded-xl bg-muted/50' />
-          </div>
-          <div className='min-h-[100vh] flex-1 rounded-xl md:min-h-min'>
-            <div className='container mx-auto'>
-              <div className='mb-3 flex w-full items-center justify-between px-2'>
-                <h2 className='text-xl font-semibold'>Recent Transactions</h2>
-                <Link className={cn(buttonVariants({ variant: 'ghost' }), 'h-8 w-8 p-0')} href={'/transactions'}>
-                  <Maximize2 className='h-4 w-4' />
-                </Link>
-              </div>
-              <TransactionTable transactions={transactions} user={user} />
-            </div>
-          </div>
+    <div className='flex grid-cols-none flex-col gap-4 md:grid md:grid-cols-3'>
+      <DepositWithdrawWidget className={'flex flex-1 flex-col items-stretch'} />
+
+      <TransferLinkWidget
+        className={'flex flex-1 flex-col items-stretch'}
+        user={user}
+        me={me}
+        users={allUsers}
+        defaultTab='pay-me'
+        minTransfer={true}
+      />
+
+      <div className='row-span-2 flex max-h-[calc(100vh-6.5rem)] flex-1 flex-col items-stretch'>
+        <div className='mb-3 flex w-full items-center justify-between px-2'>
+          <h2 className='text-xl font-semibold'>Beneficiary List</h2>
+          <Link className={cn(buttonVariants({ variant: 'ghost' }), 'h-8 w-8 p-0')} href={'/dashboard/users'}>
+            <Maximize2 className='h-4 w-4' />
+          </Link>
         </div>
-      </SidebarInset>
-    </SidebarProvider>
+        <GetAllUsers baseUrl={baseUrl} users={allUsers} singleCol />
+      </div>
+
+      <div className='col-span-2 min-h-[100vh] flex-1 rounded-xl md:min-h-min'>
+        <div className='container mx-auto'>
+          <div className='mb-3 flex w-full items-center justify-between px-2'>
+            <h2 className='text-xl font-semibold'>Recent Transactions</h2>
+            <Link className={cn(buttonVariants({ variant: 'ghost' }), 'h-8 w-8 p-0')} href={'/dashboard/transactions'}>
+              <Maximize2 className='h-4 w-4' />
+            </Link>
+          </div>
+          <TransactionTable transactions={transactions} user={user} />
+        </div>
+      </div>
+    </div>
   );
 }

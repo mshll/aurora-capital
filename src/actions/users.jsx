@@ -26,7 +26,6 @@ export const myProfile = async () => {
 export const updateProfile = async ({ image }) => {
   const formData = new FormData();
   formData.append('image', image);
-  console.log(formData);
 
   try {
     const response = await fetch(`${baseUrl}/mini-project/api/auth/profile`, {

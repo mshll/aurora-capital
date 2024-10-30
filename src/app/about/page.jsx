@@ -125,8 +125,8 @@ export default function About() {
         <section className='text-center w-full md:w-3/4'>
           <h2 className='mb-4 text-3xl font-semibold text-gray-800 dark:text-gray-100'>Join the Aurora Capital Family Today</h2>
           <p className='mb-4 text-lg text-gray-700 dark:text-gray-300'>
-            Whether you're just starting or have big goals in mind, Aurora Capital Bank is here to make your financial
-            dreams come true. Let&apos;s grow together.
+            Whether you&apos;re just starting or have big goals in mind, Aurora Capital Bank is here to make your
+            financial dreams come true. Let&apos;s grow together.
           </p>
           <Link href='/contact'>
           <Button variant='outline'>

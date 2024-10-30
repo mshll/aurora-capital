@@ -20,7 +20,7 @@ const ProfilePage = ({ profile }) => {
       <Card className='w-auto'>
         <CardHeader>
           <CardTitle className='text-xl'>{profile.username}</CardTitle>
-          <CardDescription>Balance: {formatCurrency(profile.balance)}</CardDescription>
+          <CardDescription>Balance: {formatCurrency(profile.balance, false)}</CardDescription>
         </CardHeader>
         <CardContent>
           <Avatar className='h-96 w-96 border border-border'>

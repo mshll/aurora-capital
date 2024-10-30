@@ -20,8 +20,9 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { CornerUpRightIcon, Search, UserIcon } from 'lucide-react';
 import TransferForm from './TransferForm';
 import { cn, formatCurrency } from '@/lib/utils';
+import { AlertDialogAction } from './ui/alert-dialog';
 
-function GetAllUsers({ baseUrl, users }) {
+function GetAllUsers({ baseUrl, users, singleCol = false }) {
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState('all');
 
@@ -35,7 +36,7 @@ function GetAllUsers({ baseUrl, users }) {
     const balance = formatCurrency(user.balance);
 
     return (
-      <Card key={user._id}>
+      <Card key={`get-all-users-${user._id}`}>
         <CardContent className='flex items-center justify-start gap-4 px-6 py-6'>
           <div className='flex flex-1 flex-row items-center justify-start gap-4 overflow-hidden text-ellipsis'>
             <Avatar className='h-12 w-12'>
@@ -71,18 +72,24 @@ function GetAllUsers({ baseUrl, users }) {
             </TooltipProvider>
             <DialogContent className='sm:max-w-[425px]'>
               <DialogHeader>
-                <DialogTitle>Transfer</DialogTitle>
-                <DialogDescription>Enter the amount you&apos;d like to transfer to {user.username}</DialogDescription>
+                <DialogTitle>Transfer to {user.username}</DialogTitle>
+                <DialogDescription>Please enter the amount you&apos;d like to transfer</DialogDescription>
               </DialogHeader>
               <div className='grid gap-4 py-4'>
                 <div className='flex'>
                   <TransferForm username={user.username} />
                 </div>
               </div>
-              <DialogFooter>
+              <DialogFooter className={'gap-4'}>
                 <DialogClose asChild>
-                  <Button>Cancel</Button>
+                  <Button variant={'destructive'}>Cancel</Button>
                 </DialogClose>
+
+                <Button variant={'secondary'}>
+                  <label htmlFor='submit-transfer-form' tabIndex='0'>
+                    Continue
+                  </label>
+                </Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>
@@ -92,35 +99,20 @@ function GetAllUsers({ baseUrl, users }) {
   });
 
   return (
-    <div className='flex h-full flex-1 flex-col items-center justify-center gap-16 p-8 pb-20 sm:p-20'>
-      <div className='no-scrollbar h-[500px] w-[900px] overflow-y-auto rounded-lg border bg-card p-6 text-card-foreground shadow-sm'>
-        <div className='mb-6 flex w-full items-center justify-center gap-2'>
-          <h3 className='flex-1 text-2xl font-semibold leading-none tracking-tight'>User List</h3>
-          <div className='flex flex-1 flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-x-2 sm:space-y-0'>
-            <div className='relative w-full'>
-              <Search className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
-              <Input
-                placeholder='Search for a user'
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                className='pl-8'
-              />
-            </div>
-
-            {/* <Select value={filter} onValueChange={setFilter}>
-              <SelectTrigger className='w-full sm:w-[180px]'>
-                <SelectValue placeholder='Filter by status' />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value='all'>All Users</SelectItem>
-                <SelectItem value='active'>Active</SelectItem>
-                <SelectItem value='inactive'>Inactive</SelectItem>
-              </SelectContent>
-            </Select> */}
-          </div>
-        </div>
-        <div className='flex flex-col space-y-4'>
-          <div className='grid gap-4 md:grid-cols-1 lg:grid-cols-2'>{userList}</div>
+    <div className='overflow-hidden rounded-lg border bg-card p-6 text-card-foreground shadow-sm'>
+      <div className='relative mb-4 w-full'>
+        <Search className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
+        <Input
+          placeholder='Search for a user'
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className='pl-8'
+        />
+      </div>
+      <div className='no-scrollbar mb-10 flex size-full flex-col space-y-4 overflow-auto'>
+        <div className={cn(`grid grid-cols-1 gap-4`, singleCol ? 'grid-cols-1' : 'md:grid-cols-2 lg:grid-cols-3')}>
+          {userList}
+          <span className='col-span-full'>&nbsp;</span>
         </div>
       </div>
     </div>
