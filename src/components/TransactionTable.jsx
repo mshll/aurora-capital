@@ -87,7 +87,7 @@ function TransactionTable({ transactions, user }) {
     const amount = formatCurrency(transaction.amount);
 
     return (
-      <TableRow key={transaction._id} className='w h-16'>
+      <TableRow key={`transactions-tb-${transaction._id}`} className='w h-16'>
         <TableCell className='text-md text-start'>
           <span className={isRed ? 'text-red-500' : 'text-green-500'}>
             {/* {isRed ? (

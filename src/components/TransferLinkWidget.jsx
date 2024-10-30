@@ -123,7 +123,7 @@ function TransferLinkWidget({ user, users, me, defaultTab = 'transfer', minTrans
                     <SelectContent>
                       <SelectGroup label='Beneficiaries'>
                         {users.map((user) => (
-                          <SelectItem key={user._id} value={user._id}>
+                          <SelectItem key={`user-transfer-widget-${user._id}`} value={user._id}>
                             {user.username}
                           </SelectItem>
                         ))}

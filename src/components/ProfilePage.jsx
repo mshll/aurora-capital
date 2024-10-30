@@ -18,7 +18,7 @@ const ProfilePage = ({ profile }) => {
       <Card>
         <CardHeader>
           <CardTitle className='text-xl'>{profile.username}</CardTitle>
-          <CardDescription>Balance: {formatCurrency(profile.balance)}</CardDescription>
+          <CardDescription>Balance: {formatCurrency(profile.balance, false)}</CardDescription>
         </CardHeader>
         <CardContent className='grid gap-4'>
           <Avatar className='h-96 w-96 border border-border'>

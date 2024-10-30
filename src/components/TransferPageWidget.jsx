@@ -36,6 +36,11 @@ function TransferPageWidget({ user }) {
     fetchData();
   }, [userID]);
 
+  if (!user) {
+    redirect(`/login?redirect=${pathname}?userid=${userID}%26username=${username}%26amount=${amount}`);
+    return null;
+  }
+
   if (!userID || !username || !amountParam) {
     return (
       <Card className='w-[350px]'>
