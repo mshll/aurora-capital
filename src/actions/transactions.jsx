@@ -7,8 +7,8 @@ export const myTransactions = async () => {
   const response = await fetch(`${baseUrl}/mini-project/api/transactions/my`, {
     headers: await getHeaders(),
   });
-  const users = await response.json();
-  return users.reverse();
+  const transactions = await response.json();
+  return transactions.reverse();
 };
 
 export const depositMoney = async (formData) => {

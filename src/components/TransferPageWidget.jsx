@@ -127,7 +127,7 @@ function TransferPageWidget({ user }) {
             <CardDescription>Choose your payment method</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className='w-full rounded-lg bg-card pb-5 pt-5 shadow-lg'>
+            <div className='w-full rounded-lg bg-card pb-5 pt-5'>
               <div className='mb-8 flex flex-col items-center'>
                 <h1 className='text-4xl font-bold'>Total</h1>
                 <p className='text-5xl font-bold text-foreground'>${amount}</p>
@@ -169,7 +169,7 @@ function TransferPageWidget({ user }) {
             </div>
 
             <div className='flex-1'>
-              <Button type='submit' variant='outline' className='w-full'>
+              <Button type='submit' variant='secondary' className='w-full'>
                 Pay
               </Button>
             </div>

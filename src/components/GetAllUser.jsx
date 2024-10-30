@@ -50,7 +50,7 @@ function GetAllUsers({ baseUrl, users, singleCol = false }) {
               <p
                 className={`text-sm ${user.balance > 1000000 ? 'font-semibold text-amber-700 dark:text-amber-500' : 'text-muted-foreground'}`}
               >
-                {user.balance > 0 ? balance : 'Broke :('}
+                {balance}
               </p>
             </div>
           </div>

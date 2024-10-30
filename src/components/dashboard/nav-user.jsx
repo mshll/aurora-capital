@@ -39,8 +39,8 @@ export function NavUser({ user, me }) {
                 </AvatarFallback>
               </Avatar>
               <div className='grid flex-1 text-left text-sm leading-tight'>
-                <span className='truncate font-semibold'>{getGreeting() + ', ' + me.username}!</span>
-                <span className='truncate text-xs text-muted-foreground'>{balance}</span>
+                <span className='truncate font-semibold'>{'Hi, ' + me.username}!</span>
+                <span className='truncate text-xs'>{balance}</span>
               </div>
               <ChevronsUpDown className='ml-auto size-4' />
             </SidebarMenuButton>

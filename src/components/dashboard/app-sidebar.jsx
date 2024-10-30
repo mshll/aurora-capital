@@ -33,8 +33,8 @@ import Image from 'next/image';
 import siteLogo from '@/images/logo.svg';
 import Link from 'next/link';
 
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { DashboardIcon } from '@radix-ui/react-icons';
+import { getGreeting } from '@/lib/utils';
 
 const data = {
   user: {
@@ -186,26 +186,17 @@ export function AppSidebar({ user, me, ...props }) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <TooltipProvider>
-              <Tooltip>
-                <SidebarMenuButton size='lg' asChild>
-                  <TooltipTrigger asChild>
-                    <Link href='/dashboard'>
-                      <div className='flex aspect-square size-8 items-center justify-center'>
-                        <Image src={siteLogo} alt='Logo' width={64} height={64} className='mb-2 dark:invert' />
-                      </div>
-                      <div className='ms-1 grid flex-1 text-left text-sm leading-tight'>
-                        <span className='truncate font-semibold'>Aurora Capital</span>
-                        <span className='truncate text-xs text-muted-foreground'>User Dashboard</span>
-                      </div>
-                    </Link>
-                  </TooltipTrigger>
-                </SidebarMenuButton>
-                <TooltipContent>
-                  <p>Go to Home</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <SidebarMenuButton size='lg' asChild>
+              <Link href='/dashboard'>
+                <div className='flex aspect-square size-8 items-center justify-center'>
+                  <Image src={siteLogo} alt='Logo' width={64} height={64} className='mb-2 dark:invert' />
+                </div>
+                <div className='ms-1 grid flex-1 text-left text-sm leading-tight'>
+                  <span className='truncate font-semibold'>Aurora Capital Bank</span>
+                  <span className='truncate text-xs'>{getGreeting()}.</span>
+                </div>
+              </Link>
+            </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
