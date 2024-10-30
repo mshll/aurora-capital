@@ -12,7 +12,7 @@ const HelloWorld = () => {
 
   return (
     <MainLayout>
-      <div className="space-y-8 pt-10 w-[500px]">
+      <div className="space-y-8 pt-20 w-[500px]">
         <div className="space-y-2">
           <h2 className="text-3xl font-bold">Get in touch</h2>
           <p className="text-gray-500 dark:text-gray-400">
