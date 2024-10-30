@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getUser } from './actions/token';
 
-const privateRoutes = ['/users', '/transactions', '/dashboard', '/profile', '/transfer'];
+const privateRoutes = ['/users', '/transactions', '/dashboard', '/profile'];
 const publicRoutes = ['/login', '/register'];
 
 export default async function middleware(req) {

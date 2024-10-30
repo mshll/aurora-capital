@@ -39,7 +39,7 @@ function Transactions({ transactions, user }) {
     const amount = Number.isInteger(transaction.amount) ? transaction.amount : transaction.amount.toFixed(3);
 
     return (
-      <Card key={transaction._id}>
+      <Card key={`transactions-comp-${transaction._id}`}>
         <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
           <CardTitle className='text-sm font-medium'>
             {transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1)}

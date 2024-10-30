@@ -36,7 +36,7 @@ function GetAllUsers({ baseUrl, users, singleCol = false }) {
     const balance = formatCurrency(user.balance);
 
     return (
-      <Card key={user._id}>
+      <Card key={`get-all-users-${user._id}`}>
         <CardContent className='flex items-center justify-start gap-4 px-6 py-6'>
           <div className='flex flex-1 flex-row items-center justify-start gap-4 overflow-hidden text-ellipsis'>
             <Avatar className='h-12 w-12'>

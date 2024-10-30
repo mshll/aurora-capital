@@ -17,11 +17,11 @@ export function getGreeting() {
   }
 }
 
-export function formatCurrency(amount, locale = 'en-KW') {
+export function formatCurrency(amount, isCompact = true, locale = 'en-KW') {
   const formatted = new Intl.NumberFormat(locale, {
     style: 'currency',
     currency: 'KWD',
-    notation: 'compact',
+    notation: isCompact ? 'compact' : 'standard',
   }).format(amount);
 
   return formatted.replace('KWD', '') + ' KWD';

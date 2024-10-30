@@ -8,7 +8,7 @@ import { GitHubLogoIcon } from '@radix-ui/react-icons';
 import { Button } from '@/components/ui/button';
 import { login } from '@/actions/auth';
 import { toast } from 'sonner';
-import { redirect } from 'next/navigation';
+import { redirect, useSearchParams } from 'next/navigation';
 import { LoaderCircle } from 'lucide-react';
 
 const formSchema = z.object({
@@ -33,6 +33,11 @@ function LoginForm() {
   const [values, setValues] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
+  const searchParams = useSearchParams();
+  const redirectUrl = searchParams.get('redirect') || '/dashboard';
+
+  console.log(redirectUrl);
+
   return (
     <>
       <AutoForm
@@ -54,7 +59,7 @@ function LoginForm() {
               });
             } else {
               toast.success('Logged in successfully.');
-              redirect('/dashboard');
+              redirect(redirectUrl);
             }
           });
         }}
