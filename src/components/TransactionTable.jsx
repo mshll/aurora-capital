@@ -89,7 +89,7 @@ function TransactionTable({ transactions, user }) {
     return (
       <TableRow key={`transactions-tb-${transaction._id}`} className='w h-16'>
         <TableCell className='text-md text-start'>
-          <span className={isRed ? 'text-red-500' : 'text-green-500'}>
+          <span className={isRed ? 'text-destructive' : 'text-success'}>
             {/* {isRed ? (
               <ArrowDownIcon className='mr-1 inline h-5 w-5' />
               ) : (

@@ -67,7 +67,7 @@ function Transactions({ transactions, user }) {
                 {format(parseISO(transaction.createdAt), 'MMMM dd, yyyy, hh:mm a')}
               </p>
               <p className='text-2xl font-bold'>
-                <span className={isRed ? 'text-red-500' : 'text-green-500'}>
+                <span className={isRed ? 'text-destructive' : 'text-success'}>
                   {isRed ? (
                     <ArrowDownIcon className='mr-1 inline h-5 w-5' />
                   ) : (

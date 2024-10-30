@@ -15,7 +15,7 @@ export default async function Home() {
         >
           <div className=''></div>
           <div className='container z-20 mx-auto flex flex-col gap-4'>
-            <p className='leading-7 tracking-wide text-muted-foreground'>Aurora Capital Bank</p>
+            <p className='text-xl leading-7 tracking-wide text-muted-foreground'>Aurora Capital Bank</p>
             <h1 className='max-w-2xl scroll-m-20 text-5xl font-extrabold tracking-tight lg:text-7xl'>
               Illuminating Your Financial Future
             </h1>

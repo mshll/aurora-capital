@@ -24,7 +24,7 @@ async function TransactionsPage() {
   return (
     <div className='flex w-full auto-cols-auto auto-rows-min items-stretch gap-4'>
       {/* <TransactionTable transactions={transactions} user={user} /> */}
-      <DataTable data={transactions} user={user} pageSize={12} />
+      <DataTable data={transactions} user={user} pageSize={12} allUsers={allUsers} />
     </div>
     // <MainLayout>
     //   <TransferLinkWidget user={user} me={me} users={allUsers} />
