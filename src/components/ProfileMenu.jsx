@@ -1,26 +1,24 @@
+import { logout } from '@/actions/auth';
+import { baseUrl } from '@/actions/config';
+import { myProfile } from '@/actions/users';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { BadgeCheck, LayoutDashboard, LogOutIcon, UserIcon } from 'lucide-react';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  DropdownMenuItem,
 } from '@/components/ui/dropdown-menu';
-import { logout } from '@/actions/auth';
-import { myProfile } from '@/actions/users';
-import { baseUrl } from '@/actions/config';
 import { getGreeting } from '@/lib/utils';
+import { BadgeCheck, LayoutDashboard, UserIcon } from 'lucide-react';
+import Link from 'next/link';
 
 async function ProfileMenu() {
   const user = await myProfile();
 
   const profileItems = [
-    { name: 'My Account', href: '/profile', icon: <BadgeCheck /> },
+    { name: 'My Account', href: '/dashboard/profile', icon: <BadgeCheck /> },
     { name: 'View Dashboard', href: '/dashboard', icon: <LayoutDashboard /> },
     // { name: 'Transactions', href: '/transactions' },
     // { name: 'Users', href: '/users' },

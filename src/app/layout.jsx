@@ -1,8 +1,8 @@
-import './globals.css';
-import localFont from 'next/font/local';
 import { ThemeProvider } from '@/components/theme-provider';
-import { Cairo } from 'next/font/google';
 import { Toaster } from '@/components/ui/sonner';
+import { Cairo } from 'next/font/google';
+import localFont from 'next/font/local';
+import './globals.css';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',

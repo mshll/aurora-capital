@@ -1,7 +1,7 @@
 'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button, buttonVariants } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 import {
   Dialog,
   DialogClose,
@@ -15,12 +15,11 @@ import {
 import { Input } from '@/components/ui/input';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
-import { useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { CornerUpRightIcon, Search, UserIcon } from 'lucide-react';
-import TransferForm from './TransferForm';
 import { cn, formatCurrency } from '@/lib/utils';
-import { AlertDialogAction } from './ui/alert-dialog';
+import { CornerUpRightIcon, Search, UserIcon } from 'lucide-react';
+import { useState } from 'react';
+import TransferForm from './TransferForm';
 
 function GetAllUsers({ baseUrl, users, singleCol = false }) {
   const [query, setQuery] = useState('');

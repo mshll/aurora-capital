@@ -1,10 +1,10 @@
+import HeroBg from '@/components/HeroBg';
 import LoginForm from '@/components/LoginForm';
+import MainLayout from '@/components/MainLayout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 import { metadata } from '../layout';
-import MainLayout from '@/components/MainLayout';
-import HeroBg from '@/components/HeroBg';
 
 export default function LoginPage() {
   return (

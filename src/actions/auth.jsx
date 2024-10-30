@@ -1,9 +1,8 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-
-import { baseUrl, getHeaders } from './config';
 import { redirect } from 'next/navigation';
+import { baseUrl, getHeaders } from './config';
 import { deleteToken, setToken } from './token';
 
 export async function login(formData) {

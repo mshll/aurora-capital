@@ -1,10 +1,10 @@
+import HeroBg from '@/components/HeroBg';
+import MainLayout from '@/components/MainLayout';
 import RegisterForm from '@/components/RegisterForm';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 import { metadata } from '../layout';
-import MainLayout from '@/components/MainLayout';
-import HeroBg from '@/components/HeroBg';
 
 export default function RegisterPage() {
   return (

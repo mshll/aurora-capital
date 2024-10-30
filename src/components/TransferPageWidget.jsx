@@ -1,17 +1,17 @@
 'use client';
-import { Button, buttonVariants } from '@/components/ui/button';
-import { CreditCardIcon } from 'lucide-react';
-import { toast } from 'sonner';
-import { useState, useEffect } from 'react';
-import { useSearchParams, usePathname, redirect } from 'next/navigation';
-import { findUserById } from '@/actions/users';
 import { transfer } from '@/actions/transactions';
+import { findUserById } from '@/actions/users';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
+import { CreditCardIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { cn } from '@/lib/utils';
+import { redirect, usePathname, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 function TransferPageWidget({ user }) {
   const searchParams = useSearchParams();
@@ -38,7 +38,6 @@ function TransferPageWidget({ user }) {
 
   if (!user) {
     redirect(`/login?redirect=${pathname}?userid=${userID}%26username=${username}%26amount=${amount}`);
-    return null;
   }
 
   if (!userID || !username || !amountParam) {

@@ -5,20 +5,17 @@ import { baseUrl, getHeaders } from './config';
 
 export const getAllUsers = async () => {
   const response = await fetch(`${baseUrl}/mini-project/api/auth/users`, {
-    // method: 'get',
+    method: 'GET',
     headers: await getHeaders(),
-    // body: JSON.stringify(userData),
   });
   const users = await response.json();
-  console.log(users);
   return users.reverse();
 };
 
 export const myProfile = async () => {
   const response = await fetch(`${baseUrl}/mini-project/api/auth/me`, {
-    // method: 'get',
+    method: 'GET',
     headers: await getHeaders(),
-    // body: JSON.stringify(userData),
   });
   const user = response.json();
   return user;
@@ -37,6 +34,7 @@ export const updateProfile = async ({ image }) => {
 
     const result = await response.json();
     revalidatePath('/profile');
+    revalidatePath('/dashboard/profile');
     return !result.success; // because if successfull result won't have 'success' key
   } catch (error) {
     console.error('Profile update error:', error);
@@ -51,11 +49,6 @@ export const findUserById = async (id) => {
     user = await response.json();
   } catch (error) {
     console.error('user not found ');
-
-    // redirect('/somewhere');
   }
   return user;
 };
-
-///api/auth/user/66d9eb455f25f11b001cb6db
-//
