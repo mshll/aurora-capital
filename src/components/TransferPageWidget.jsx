@@ -1,17 +1,17 @@
 'use client';
-import { Button, buttonVariants } from '@/components/ui/button';
-import { CreditCardIcon } from 'lucide-react';
-import { toast } from 'sonner';
-import { useState, useEffect } from 'react';
-import { useSearchParams, usePathname, redirect } from 'next/navigation';
-import { findUserById } from '@/actions/users';
 import { transfer } from '@/actions/transactions';
+import { findUserById } from '@/actions/users';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
+import { CreditCardIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { cn } from '@/lib/utils';
+import { redirect, usePathname, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 function TransferPageWidget({ user }) {
   const searchParams = useSearchParams();
@@ -38,7 +38,6 @@ function TransferPageWidget({ user }) {
 
   if (!user) {
     redirect(`/login?redirect=${pathname}?userid=${userID}%26username=${username}%26amount=${amount}`);
-    return null;
   }
 
   if (!userID || !username || !amountParam) {
@@ -127,7 +126,7 @@ function TransferPageWidget({ user }) {
             <CardDescription>Choose your payment method</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className='w-full rounded-lg bg-card pb-5 pt-5 shadow-lg'>
+            <div className='w-full rounded-lg bg-card pb-5 pt-5'>
               <div className='mb-8 flex flex-col items-center'>
                 <h1 className='text-4xl font-bold'>Total</h1>
                 <p className='text-5xl font-bold text-foreground'>${amount}</p>
@@ -169,7 +168,7 @@ function TransferPageWidget({ user }) {
             </div>
 
             <div className='flex-1'>
-              <Button type='submit' variant='outline' className='w-full'>
+              <Button type='submit' variant='secondary' className='w-full'>
                 Pay
               </Button>
             </div>

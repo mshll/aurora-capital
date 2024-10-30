@@ -7,8 +7,8 @@ export const myTransactions = async () => {
   const response = await fetch(`${baseUrl}/mini-project/api/transactions/my`, {
     headers: await getHeaders(),
   });
-  const users = response.json();
-  return users;
+  const transactions = await response.json();
+  return transactions.reverse();
 };
 
 export const depositMoney = async (formData) => {
@@ -40,7 +40,6 @@ export const withdrawMoney = async (formData) => {
       body: JSON.stringify(userData),
     });
 
-    console.log(response);
     revalidatePath('/dashboard');
     revalidatePath('/dashboard/transactions');
     return response.ok;
@@ -52,8 +51,6 @@ export const withdrawMoney = async (formData) => {
 
 export const transfer = async (formData, username) => {
   const userData = Object.fromEntries(formData);
-
-  console.log(userData);
 
   try {
     const response = await fetch(`${baseUrl}/mini-project/api/transactions/transfer/${username}`, {

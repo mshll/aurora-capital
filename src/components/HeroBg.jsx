@@ -1,7 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { AuroraBackground } from '@/components/ui/aurora-background';
+import { motion } from 'framer-motion';
 
 function HeroBg({ children, className }) {
   return (

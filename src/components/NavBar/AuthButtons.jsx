@@ -1,6 +1,6 @@
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 import { getUser } from '@/actions/token';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 import ProfileMenu from '../ProfileMenu';
 
 async function AuthButtons() {

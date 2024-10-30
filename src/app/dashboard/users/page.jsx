@@ -1,7 +1,6 @@
+import { baseUrl } from '@/actions/config';
 import { getAllUsers } from '@/actions/users';
 import GetAllUsers from '@/components/GetAllUser';
-import { baseUrl } from '@/actions/config';
-import MainLayout from '@/components/MainLayout';
 
 async function Users() {
   const allUsers = await getAllUsers();

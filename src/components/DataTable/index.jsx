@@ -34,7 +34,7 @@ import { DataTableViewOptions } from './ViewOptions';
 import { cn, formatCurrency } from '@/lib/utils';
 import { Calendar } from '../ui/calendar';
 
-export function DataTable({ data, user, showOptions = true, pageSize = 10 }) {
+export function DataTable({ data, user, allUsers, showOptions = true, pageSize = 10 }) {
   const columns = [
     {
       accessorKey: '_id',
@@ -69,10 +69,7 @@ export function DataTable({ data, user, showOptions = true, pageSize = 10 }) {
         let isRed = row.getValue('amount') < 0;
         const type = row.getValue('type');
         return (
-          <Badge
-            variant='outline'
-            className={`${isRed ? 'bg-red-200 dark:bg-red-800' : 'bg-green-200 dark:bg-green-800'}`}
-          >
+          <Badge variant='outline' className={`${isRed ? 'text-destructive' : 'text-success'}`}>
             {type.charAt(0).toUpperCase() + type.slice(1)}
           </Badge>
         );
@@ -90,8 +87,11 @@ export function DataTable({ data, user, showOptions = true, pageSize = 10 }) {
       id: 'actions',
       cell: ({ row }) => {
         const transaction = row.original;
+        const from =
+          user._id === transaction.from ? 'You' : allUsers.find((user) => user._id === transaction.from)?.username;
+        const to = user._id === transaction.to ? 'You' : allUsers.find((user) => user._id === transaction.to)?.username;
+        const self = from === to;
 
-        // TODO: Implement actions
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -100,13 +100,16 @@ export function DataTable({ data, user, showOptions = true, pageSize = 10 }) {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align='end'>
-              <DropdownMenuLabel className='text-muted-foreground'>Actions</DropdownMenuLabel>
-              <DropdownMenuSeparator />
+              {!self && (
+                <>
+                  <DropdownMenuLabel className='text-muted-foreground'>From: {from}</DropdownMenuLabel>
+                  <DropdownMenuLabel className='text-muted-foreground'>To: {to}</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                </>
+              )}
               <DropdownMenuItem onClick={() => navigator.clipboard.writeText(transaction._id)}>
                 Copy transaction ID
               </DropdownMenuItem>
-              <DropdownMenuItem>View customer</DropdownMenuItem>
-              <DropdownMenuItem>View transaction details</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         );

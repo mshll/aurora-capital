@@ -1,7 +1,7 @@
 import { transfer } from '@/actions/transactions';
 import { Input } from '@/components/ui/input';
-import { Label } from './ui/label';
 import { toast } from 'sonner';
+import { Label } from './ui/label';
 
 function TransferForm({ username }) {
   const handlePayment = () => {

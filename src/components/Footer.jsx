@@ -1,10 +1,10 @@
+import { metadata } from '@/app/layout';
 import { Separator } from '@/components/ui/separator';
+import siteLogoFull from '@/images/logo-full.svg';
+import { GitHubLogoIcon, InstagramLogoIcon, LinkedInLogoIcon, TwitterLogoIcon } from '@radix-ui/react-icons';
+import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from './ui/button';
-import { GitHubLogoIcon, TwitterLogoIcon, InstagramLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons';
-import { metadata } from '@/app/layout';
-import Image from 'next/image';
-import siteLogoFull from '@/images/logo-full.svg';
 
 function Footer() {
   const sections = [

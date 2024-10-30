@@ -1,24 +1,15 @@
 'use client';
 
-import { ArrowDownIcon, ArrowUpIcon, CalendarIcon, DollarSign, MoreHorizontal, Search } from 'lucide-react';
-import { format, parseISO, isSameDay } from 'date-fns';
-import { cn, formatCurrency } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useState, useRef, useEffect } from 'react';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { cn, formatCurrency } from '@/lib/utils';
+import { format, isSameDay, parseISO } from 'date-fns';
+import { CalendarIcon, Search } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 
 function TransactionTable({ transactions, user }) {
   const [query, setQuery] = useState('');
@@ -89,7 +80,7 @@ function TransactionTable({ transactions, user }) {
     return (
       <TableRow key={`transactions-tb-${transaction._id}`} className='w h-16'>
         <TableCell className='text-md text-start'>
-          <span className={isRed ? 'text-red-500' : 'text-green-500'}>
+          <span className={isRed ? 'text-destructive' : 'text-success'}>
             {/* {isRed ? (
               <ArrowDownIcon className='mr-1 inline h-5 w-5' />
               ) : (
@@ -113,9 +104,9 @@ function TransactionTable({ transactions, user }) {
     <div className='size-full'>
       <div className='no-scrollbar size-full overflow-hidden rounded-lg border bg-card text-card-foreground'>
         {/* Sticky container for the title and filter/search bar */}
-        <div className='sticky top-0 z-10 flex size-full flex-col gap-1 bg-card px-5 pt-3'>
-          <div className='flex size-full flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-x-2 sm:space-y-0'>
-            <div className='relative'>
+        <div className='sticky top-0 z-10 flex size-full flex-col gap-1 px-5 pt-3'>
+          <div className='flex size-full flex-col gap-4 space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-x-2 sm:space-y-0'>
+            <div className='relative size-full'>
               <Search className='absolute left-2.5 top-3 h-4 w-4 text-muted-foreground' />
               <Input
                 placeholder='Search for a transaction'
@@ -125,12 +116,15 @@ function TransactionTable({ transactions, user }) {
               />
             </div>
 
-            <div className='flex size-full gap-4'>
+            <div className='flex size-full justify-end gap-4'>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
                     variant={'outline'}
-                    className={cn('justify-start text-left text-sm font-normal', !date && 'text-muted-foreground')}
+                    className={cn(
+                      'justify-start bg-card text-left text-sm font-normal',
+                      !date && 'text-muted-foreground',
+                    )}
                   >
                     <CalendarIcon className='mr-2 h-5 w-5' />
                     {date ? format(date, 'MMMM dd, yyyy') : 'Filter by date'}
@@ -158,7 +152,7 @@ function TransactionTable({ transactions, user }) {
 
         <div className='no-scrollbar mx-6 mt-4 max-h-[calc(100vh-29rem)] overflow-y-auto'>
           <Table>
-            <TableHeader className='sticky top-0 z-10 bg-card' ref={headerRef}>
+            <TableHeader className='sticky top-0 z-10' ref={headerRef}>
               <TableRow className='h-12'>
                 <TableHead
                   className={cn(

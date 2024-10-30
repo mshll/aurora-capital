@@ -1,9 +1,6 @@
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from './ui/input';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from './ui/button';
-import { Label } from './ui/label';
-import Link from 'next/link';
-import { Form } from './ui/form';
+import { Input } from './ui/input';
 
 function PayCard({ title, inputLabel, buttonText, onSubmit = () => {}, inputVal, setInputVal, formAction = '' }) {
   return (
