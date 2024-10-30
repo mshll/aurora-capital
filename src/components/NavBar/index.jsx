@@ -9,7 +9,7 @@ import siteLogo from '@/images/logo.svg';
 function NavBar() {
   const navItems = [
     { name: 'Home', href: '/' },
-    { name: 'About Us', href: '/about' },
+    { name: 'About Us', href: '/aboutUs' },
     { name: 'Contact', href: '/contact' },
     // { name: 'Profile', href: '/profile' },
   ];

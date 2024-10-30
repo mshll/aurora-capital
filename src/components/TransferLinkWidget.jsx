@@ -28,6 +28,7 @@ function TransferLinkWidget({ user, users, me, defaultTab = 'transfer', minTrans
   const [isChecked, setIsChecked] = React.useState(false);
   const [payMeAmount, setPayMeAmount] = React.useState('');
   const [payMeLink, setPayMeLink] = React.useState('');
+  const [isCopied, setIsCopied] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -70,6 +71,18 @@ function TransferLinkWidget({ user, users, me, defaultTab = 'transfer', minTrans
           onClick: () => window.open(link, '_blank'),
         },
       });
+    }
+  };
+
+  const handleCopy = async (payMeLink) => {
+    try {
+      await navigator.clipboard.writeText(payMeLink);
+      setIsCopied(true);
+      toast.success('Link copied to clipboard!');
+      setTimeout(() => setIsCopied(false), 2000); // Reset copy state after 2 seconds
+    } catch (error) {
+      console.error('Failed to copy:', error);
+      toast.error('Failed to copy link.');
     }
   };
 
