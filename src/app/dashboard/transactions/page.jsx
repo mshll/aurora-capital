@@ -5,6 +5,7 @@ import Transactions from '@/components/Transactions';
 import TransactionTable from '@/components/TransactionTable';
 import TransferLinkWidget from '@/components/TransferLinkWidget';
 import { getAllUsers, myProfile } from '@/actions/users';
+import { DataTable } from '@/components/DataTable';
 
 async function TransactionsPage() {
   const transactions = await myTransactions();
@@ -14,7 +15,8 @@ async function TransactionsPage() {
 
   return (
     <div className='flex w-full auto-cols-auto auto-rows-min items-stretch gap-4'>
-      <TransactionTable transactions={transactions} user={user} />
+      {/* <TransactionTable transactions={transactions} user={user} /> */}
+      <DataTable data={transactions} user={user} pageSize={12} />
     </div>
     // <MainLayout>
     //   <TransferLinkWidget user={user} me={me} users={allUsers} />

@@ -53,12 +53,16 @@ export const withdrawMoney = async (formData) => {
 export const transfer = async (formData, username) => {
   const userData = Object.fromEntries(formData);
 
+  console.log(userData);
+
   try {
     const response = await fetch(`${baseUrl}/mini-project/api/transactions/transfer/${username}`, {
       method: 'PUT',
       headers: await getHeaders(),
       body: JSON.stringify(userData),
     });
+
+    console.log(response);
 
     revalidatePath('/dashboard');
     revalidatePath('/dashboard/transactions');

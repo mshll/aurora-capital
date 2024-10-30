@@ -50,11 +50,12 @@ function TransferLinkWidget({ user, users, me, defaultTab = 'transfer', minTrans
       return;
     }
 
-    transfer(formData, selectedBeneficiary);
+    const beneficiary = users.find((user) => user._id === selectedBeneficiary)?.username;
+    transfer(formData, beneficiary);
 
     // Successful transfer
     toast.success('Transfer Successful!', {
-      description: `Transfer of ${amount} KWD to ${selectedBeneficiary} was successful.`,
+      description: `Transfer of ${amount} KWD to ${beneficiary} was successful.`,
     });
   };
 

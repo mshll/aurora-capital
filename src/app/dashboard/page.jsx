@@ -2,6 +2,7 @@ import { baseUrl } from '@/actions/config';
 import { getUser } from '@/actions/token';
 import { myTransactions } from '@/actions/transactions';
 import { getAllUsers, myProfile } from '@/actions/users';
+import { DataTable } from '@/components/DataTable';
 import DepositWithdrawWidget from '@/components/DepositWithdrawWidget';
 import GetAllUsers from '@/components/GetAllUser';
 import TransactionTable from '@/components/TransactionTable';
