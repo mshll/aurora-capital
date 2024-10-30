@@ -62,8 +62,6 @@ export const transfer = async (formData, username) => {
       body: JSON.stringify(userData),
     });
 
-    console.log(response);
-
     revalidatePath('/dashboard');
     revalidatePath('/dashboard/transactions');
     revalidatePath('/users');

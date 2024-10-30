@@ -42,12 +42,12 @@ export default async function DashboardPage() {
 
       <div className='row-span-2 flex max-h-[calc(100vh-6.5rem)] flex-1 flex-col items-stretch'>
         <div className='mb-3 flex w-full items-center justify-between px-2'>
-          <h2 className='text-xl font-semibold'>User List</h2>
+          <h2 className='text-xl font-semibold'>Beneficiary List</h2>
           <Link className={cn(buttonVariants({ variant: 'ghost' }), 'h-8 w-8 p-0')} href={'/dashboard/users'}>
             <Maximize2 className='h-4 w-4' />
           </Link>
         </div>
-        <GetAllUsers baseUrl={baseUrl} users={allUsers} colsNum={1} />
+        <GetAllUsers baseUrl={baseUrl} users={allUsers} singleCol />
       </div>
 
       <div className='col-span-2 min-h-[100vh] flex-1 rounded-xl md:min-h-min'>

@@ -20,10 +20,14 @@ import PayCard from './PayCard';
 import { useState } from 'react';
 import { depositMoney, withdrawMoney } from '@/actions/transactions';
 import { toast } from 'sonner';
+import { useSearchParams } from 'next/navigation';
 
 function DepositWithdrawWidget({ className, ...props }) {
   const [depositAmount, setDepositAmount] = useState('');
   const [withdrawAmount, setWithdrawAmount] = useState('');
+  const searchParams = useSearchParams();
+
+  const tab = searchParams.get('tab') || 'deposit';
 
   // function handleDeposit() {
   //   const formData = new FormData();
@@ -62,12 +66,12 @@ function DepositWithdrawWidget({ className, ...props }) {
 
   return (
     <div className={className} {...props}>
-      <Tabs defaultValue='deposit-tab' className=''>
+      <Tabs defaultValue={tab}>
         <TabsList className='grid w-full grid-cols-2'>
-          <TabsTrigger value='deposit-tab'>Deposit</TabsTrigger>
-          <TabsTrigger value='withdraw-tab'>Withdraw</TabsTrigger>
+          <TabsTrigger value='deposit'>Deposit</TabsTrigger>
+          <TabsTrigger value='withdraw'>Withdraw</TabsTrigger>
         </TabsList>
-        <TabsContent value='deposit-tab'>
+        <TabsContent value='deposit'>
           <PayCard
             title='Deposit funds into your account'
             inputLabel='Enter amount'
@@ -78,7 +82,7 @@ function DepositWithdrawWidget({ className, ...props }) {
           />
         </TabsContent>
 
-        <TabsContent value='withdraw-tab'>
+        <TabsContent value='withdraw'>
           <PayCard
             title='Withdraw funds from your account'
             inputLabel='Enter amount'

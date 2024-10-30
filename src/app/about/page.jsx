@@ -11,9 +11,9 @@ export default function About() {
   ];
   const founderCards = founders.map((founder) => {
     return (
-      <div className='flex flex-row items-center justify-center'>
+      <div className='flex flex-row items-center justify-center' key={founder.name}>
         <div className='flex flex-col items-center justify-center'>
-          <Image src={`${founder.image}`} />
+          <Image src={`${founder.image}`} alt={founder.name} />
           <h1>{founder.name}</h1>
           <h1>{founder.title}</h1>
         </div>
@@ -146,8 +146,8 @@ export default function About() {
             Join the Aurora Capital Family Today
           </h2>
           <p className='mb-4 text-lg text-gray-700 dark:text-gray-300'>
-            Whether you're just starting or have big goals in mind, Aurora Capital Bank is here to make your financial
-            dreams come true. Let&apos;s grow together.
+            Whether you&apos;re just starting or have big goals in mind, Aurora Capital Bank is here to make your
+            financial dreams come true. Let&apos;s grow together.
           </p>
           <>{founderCards}</>
           <button className='rounded-lg border border-blue-600 px-6 py-3 font-semibold text-blue-600 transition-colors hover:bg-blue-100 dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-800'>

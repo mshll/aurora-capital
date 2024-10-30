@@ -20,8 +20,9 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { CornerUpRightIcon, Search, UserIcon } from 'lucide-react';
 import TransferForm from './TransferForm';
 import { cn, formatCurrency } from '@/lib/utils';
+import { AlertDialogAction } from './ui/alert-dialog';
 
-function GetAllUsers({ baseUrl, users, colsNum = 2 }) {
+function GetAllUsers({ baseUrl, users, singleCol = false }) {
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState('all');
 
@@ -71,18 +72,24 @@ function GetAllUsers({ baseUrl, users, colsNum = 2 }) {
             </TooltipProvider>
             <DialogContent className='sm:max-w-[425px]'>
               <DialogHeader>
-                <DialogTitle>Transfer</DialogTitle>
-                <DialogDescription>Enter the amount you&apos;d like to transfer to {user.username}</DialogDescription>
+                <DialogTitle>Transfer to {user.username}</DialogTitle>
+                <DialogDescription>Please enter the amount you&apos;d like to transfer</DialogDescription>
               </DialogHeader>
               <div className='grid gap-4 py-4'>
                 <div className='flex'>
                   <TransferForm username={user.username} />
                 </div>
               </div>
-              <DialogFooter>
+              <DialogFooter className={'gap-4'}>
                 <DialogClose asChild>
-                  <Button>Cancel</Button>
+                  <Button variant={'destructive'}>Cancel</Button>
                 </DialogClose>
+
+                <Button variant={'secondary'}>
+                  <label htmlFor='submit-transfer-form' tabIndex='0'>
+                    Continue
+                  </label>
+                </Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>
@@ -103,7 +110,7 @@ function GetAllUsers({ baseUrl, users, colsNum = 2 }) {
         />
       </div>
       <div className='no-scrollbar mb-10 flex size-full flex-col space-y-4 overflow-auto'>
-        <div className={`grid gap-4 md:grid-cols-2 lg:grid-cols-${colsNum}`}>
+        <div className={cn(`grid grid-cols-1 gap-4`, singleCol ? 'grid-cols-1' : 'md:grid-cols-2 lg:grid-cols-3')}>
           {userList}
           <span className='col-span-full'>&nbsp;</span>
         </div>

@@ -54,7 +54,12 @@ export function DataTable({ data, user, showOptions = true, pageSize = 10 }) {
       header: ({ column }) => <DataTableColumnHeader column={column} title='Amount' />,
       cell: ({ row }) => {
         const amount = formatCurrency(parseFloat(row.getValue('amount')));
-        return <div className='font-medium'>{amount}</div>;
+        return (
+          <div className='font-medium'>
+            {row.getValue('amount') > 0 ? '+' : ''}
+            {amount}
+          </div>
+        );
       },
     },
     {

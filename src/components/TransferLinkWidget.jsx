@@ -22,13 +22,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { transfer } from '@/actions/transactions';
 import { toast } from 'sonner';
 import PayCard from './PayCard';
+import { useSearchParams } from 'next/navigation';
 
 function TransferLinkWidget({ user, users, me, defaultTab = 'transfer', minTransfer = false, className, ...props }) {
   const [selectedBeneficiary, setSelectedBeneficiary] = useState();
   const [isChecked, setIsChecked] = React.useState(false);
   const [payMeAmount, setPayMeAmount] = React.useState('');
-  const [payMeLink, setPayMeLink] = React.useState('');
   const [isCopied, setIsCopied] = useState(false);
+  const searchParams = useSearchParams();
+
+  const tab = searchParams.get('tab') || defaultTab;
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -52,11 +55,21 @@ function TransferLinkWidget({ user, users, me, defaultTab = 'transfer', minTrans
     }
 
     const beneficiary = users.find((user) => user._id === selectedBeneficiary)?.username;
-    transfer(formData, beneficiary);
+    const response = transfer(formData, beneficiary);
 
-    // Successful transfer
-    toast.success('Transfer Successful!', {
-      description: `Transfer of ${amount} KWD to ${beneficiary} was successful.`,
+    toast.promise(response, {
+      loading: 'Processing...',
+    });
+
+    response.then((res) => {
+      if (res) {
+        toast.success('Transfer Successful!', {
+          description: `Transfer of ${amount} KWD to ${username} was successful.`,
+        });
+        event.target.reset();
+      } else {
+        toast.error('Payment failed');
+      }
     });
   };
 
@@ -88,7 +101,7 @@ function TransferLinkWidget({ user, users, me, defaultTab = 'transfer', minTrans
 
   return (
     <div className={className} {...props}>
-      <Tabs defaultValue={defaultTab}>
+      <Tabs defaultValue={tab}>
         <TabsList className='grid w-full grid-cols-2'>
           <TabsTrigger value='transfer'>Transfer</TabsTrigger>
           <TabsTrigger value='pay-me'>Pay Me</TabsTrigger>

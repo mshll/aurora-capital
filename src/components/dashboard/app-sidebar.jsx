@@ -1,7 +1,20 @@
 'use client';
 
 import * as React from 'react';
-import { BookOpen, Bot, Command, Frame, LifeBuoy, Map, PieChart, Send, Settings2, SquareTerminal } from 'lucide-react';
+import {
+  BookOpen,
+  Bot,
+  Command,
+  Forward,
+  Frame,
+  LifeBuoy,
+  Map,
+  PieChart,
+  Send,
+  Settings2,
+  SquareTerminal,
+} from 'lucide-react';
+import { ArrowLeftRight, ArrowUpFromLine, ArrowDownFromLine, Wallet, HandCoins, LinkIcon, Users } from 'lucide-react';
 
 import { NavMain } from '@/components/dashboard/nav-main';
 import { NavProjects } from '@/components/dashboard/nav-projects';
@@ -21,6 +34,7 @@ import siteLogo from '@/images/logo.svg';
 import Link from 'next/link';
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { DashboardIcon } from '@radix-ui/react-icons';
 
 const data = {
   user: {
@@ -129,19 +143,39 @@ const data = {
   ],
   projects: [
     {
-      name: 'Design Engineering',
-      url: '#',
-      icon: Frame,
+      name: 'Dashboard',
+      url: '/dashboard',
+      icon: DashboardIcon,
     },
     {
-      name: 'Sales & Marketing',
-      url: '#',
-      icon: PieChart,
+      name: 'Transactions',
+      url: '/dashboard/transactions',
+      icon: ArrowLeftRight,
     },
     {
-      name: 'Travel',
-      url: '#',
-      icon: Map,
+      name: 'Deposit',
+      url: '/dashboard/deposit-withdraw?tab=deposit',
+      icon: ArrowUpFromLine,
+    },
+    {
+      name: 'Withdraw',
+      url: '/dashboard/deposit-withdraw?tab=withdraw',
+      icon: ArrowDownFromLine,
+    },
+    {
+      name: 'Transfer funds',
+      url: '/dashboard/transfer?tab=transfer',
+      icon: Forward,
+    },
+    {
+      name: 'Pay me',
+      url: '/dashboard/transfer?tab=pay-me',
+      icon: LinkIcon,
+    },
+    {
+      name: 'Beneficiaries',
+      url: '/dashboard/users',
+      icon: Users,
     },
   ],
 };
@@ -176,7 +210,7 @@ export function AppSidebar({ user, me, ...props }) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        {/* <NavMain items={data.navMain} /> */}
         <NavProjects projects={data.projects} />
         <NavSecondary items={data.navSecondary} className='mt-auto' />
       </SidebarContent>

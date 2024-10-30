@@ -13,7 +13,10 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
-import { formatCurrency } from '@/lib/utils';
+import { formatCurrency, getGreeting } from '@/lib/utils';
+import { logout } from '@/actions/auth';
+import Link from 'next/link';
+import { ThemeToggler } from '../NavBar/ThemeToggler';
 
 export function NavUser({ user, me }) {
   const { isMobile } = useSidebar();
@@ -36,7 +39,7 @@ export function NavUser({ user, me }) {
                 </AvatarFallback>
               </Avatar>
               <div className='grid flex-1 text-left text-sm leading-tight'>
-                <span className='truncate font-semibold'>{me.username}</span>
+                <span className='truncate font-semibold'>{getGreeting() + ', ' + me.username}!</span>
                 <span className='truncate text-xs text-muted-foreground'>{balance}</span>
               </div>
               <ChevronsUpDown className='ml-auto size-4' />
@@ -65,28 +68,15 @@ export function NavUser({ user, me }) {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <Sparkles />
-                Upgrade to Pro
+                <Link href='/profile'>My Account</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href='/'>Back to Home</Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCard />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Bell />
-                Notifications
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <LogOut />
+            <DropdownMenuItem onClick={logout} className='cursor-pointer text-destructive'>
+              {/* <LogOut /> */}
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>
