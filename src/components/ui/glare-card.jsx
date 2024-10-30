@@ -7,7 +7,7 @@ export const GlareCard = ({
     children,
     className,
     width = "250px",
-    height = "auto",
+    height = "390px",
 }) => {
   const isPointerInside = useRef(false);
   const refElement = useRef(null);
