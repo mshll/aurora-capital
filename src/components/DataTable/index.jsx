@@ -1,12 +1,9 @@
 'use client';
 
 import {
-  ColumnDef,
-  SortingState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
@@ -17,7 +14,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { useEffect, useState } from 'react';
 import { CalendarIcon, MoreHorizontal } from 'lucide-react';
-import { ArrowUpDown } from 'lucide-react';
+import { format, parseISO, isWithinInterval } from 'date-fns';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,27 +24,25 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { format, parseISO } from 'date-fns';
 import { DataTableColumnHeader } from './ColumnHeader';
-import { DataTablePagination } from './Pagination';
 import { DataTableViewOptions } from './ViewOptions';
 import { cn, formatCurrency } from '@/lib/utils';
 import { Calendar } from '../ui/calendar';
 
 export function DataTable({ data, user, showOptions = true, pageSize = 10 }) {
+  const [dateRange, setDateRange] = useState({ from: null, to: null });
+
   const columns = [
     {
       accessorKey: '_id',
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title='Transaction ID' className={'hidden md:inline-block'} />
+        <DataTableColumnHeader column={column} title='Transaction ID' className='hidden md:inline-block' />
       ),
-      cell: ({ row }) => {
-        return (
-          <Badge variant='outline' className={'hidden text-xs md:inline-block'}>
-            {'...' + row.getValue('_id').slice(-8)}
-          </Badge>
-        );
-      },
+      cell: ({ row }) => (
+        <Badge variant='outline' className='hidden text-xs md:inline-block'>
+          {'...' + row.getValue('_id').slice(-8)}
+        </Badge>
+      ),
     },
     {
       accessorKey: 'amount',
@@ -66,7 +61,7 @@ export function DataTable({ data, user, showOptions = true, pageSize = 10 }) {
       accessorKey: 'type',
       header: ({ column }) => <DataTableColumnHeader column={column} title='Transaction Type' />,
       cell: ({ row }) => {
-        let isRed = row.getValue('amount') < 0;
+        const isRed = row.getValue('amount') < 0;
         const type = row.getValue('type');
         return (
           <Badge
@@ -85,13 +80,19 @@ export function DataTable({ data, user, showOptions = true, pageSize = 10 }) {
         const date = row.getValue('createdAt');
         return <div>{format(parseISO(date), 'yyyy-MM-dd hh:mm:ss a')}</div>;
       },
+      filterFn: (row, columnId, filterValue) => {
+        if (!filterValue.from && !filterValue.to) return true;
+        const rowDate = parseISO(row.getValue(columnId));
+        return isWithinInterval(rowDate, {
+          start: filterValue.from || new Date(-8640000000000000),
+          end: filterValue.to || new Date(8640000000000000),
+        });
+      },
     },
     {
       id: 'actions',
       cell: ({ row }) => {
         const transaction = row.original;
-
-        // TODO: Implement actions
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -116,20 +117,20 @@ export function DataTable({ data, user, showOptions = true, pageSize = 10 }) {
 
   const [sorting, setSorting] = useState();
   const [globalFilter, setGlobalFilter] = useState('');
-  const [date, setDate] = useState();
-  const [columnFilters, setColumnFilters] = useState();
+  const [columnFilters, setColumnFilters] = useState([]);
 
+  // Set the date range filter for the createdAt column
   useEffect(() => {
-    const filterDate = date ? format(date, 'yyyy-MM-dd') : null;
-    table.getColumn('createdAt')?.setFilterValue(filterDate);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [date]);
+    setColumnFilters((filters) => [
+      ...filters.filter((filter) => filter.id !== 'createdAt'),
+      { id: 'createdAt', value: dateRange },
+    ]);
+  }, [dateRange]);
 
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    // getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     onGlobalFilterChange: setGlobalFilter,
@@ -141,11 +142,6 @@ export function DataTable({ data, user, showOptions = true, pageSize = 10 }) {
       globalFilter,
       columnFilters,
     },
-    // initialState: {
-    //   pagination: {
-    //     pageSize,
-    //   },
-    // },
   });
 
   return (
@@ -158,16 +154,39 @@ export function DataTable({ data, user, showOptions = true, pageSize = 10 }) {
           className='max-w-sm'
         />
         <div className='flex gap-3'>
-          {/* FILTER BY DATE */}
           <Popover>
             <PopoverTrigger asChild>
-              <Button variant='outline' size='sm' className={cn('ml-auto h-8 ps-3', !date && 'text-muted-foreground')}>
-                <CalendarIcon className='mr-1 h-4 w-4' />
-                {date ? format(date, 'MMMM dd, yyyy') : 'Pick a date'}
+              <Button
+                id='date'
+                variant='outline'
+                className={cn(
+                  'w-[300px] justify-start text-left font-normal',
+                  !dateRange.from && 'text-muted-foreground',
+                )}
+              >
+                <CalendarIcon />
+                {dateRange.from ? (
+                  dateRange.to ? (
+                    <>
+                      {format(dateRange.from, 'MMMM dd, yyyy')} - {format(dateRange.to, 'MMMM dd, yyyy')}
+                    </>
+                  ) : (
+                    format(dateRange.from, 'MMMM dd, yyyy')
+                  )
+                ) : (
+                  <span>Pick a date</span>
+                )}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className='w-full p-0' align='start'>
-              <Calendar mode='single' selected={date} onSelect={(newDate) => setDate(newDate)} initialFocus />
+            <PopoverContent className='w-auto p-0' align='start'>
+              <Calendar
+                initialFocus
+                mode='range'
+                defaultMonth={dateRange.from}
+                selected={dateRange}
+                onSelect={(newRange) => setDateRange(newRange || { from: null, to: null })}
+                numberOfMonths={2}
+              />
             </PopoverContent>
           </Popover>
 
@@ -179,13 +198,11 @@ export function DataTable({ data, user, showOptions = true, pageSize = 10 }) {
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id} className='ps-6'>
-                      {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                    </TableHead>
-                  );
-                })}
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id} className='ps-6'>
+                    {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                  </TableHead>
+                ))}
               </TableRow>
             ))}
           </TableHeader>
@@ -210,9 +227,6 @@ export function DataTable({ data, user, showOptions = true, pageSize = 10 }) {
           </TableBody>
         </Table>
       </div>
-      {/* <div className={cn('flex items-center justify-end space-x-2 py-4', !showOptions && 'hidden')}>
-        <DataTablePagination table={table} />
-      </div> */}
     </div>
   );
 }
