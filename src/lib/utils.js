@@ -1,4 +1,4 @@
-import { clsx } from 'clsx';
+import { ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs) {
@@ -26,3 +26,4 @@ export function formatCurrency(amount, isCompact = true, locale = 'en-KW') {
 
   return formatted.replace('KWD', '') + ' KWD';
 }
+
