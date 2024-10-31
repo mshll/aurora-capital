@@ -65,10 +65,10 @@ export function NavUser({ user, me }) {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem asChild>
                 <Link href='/dashboard/profile'>My Account</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem asChild>
                 <Link href='/'>Back to Home</Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
