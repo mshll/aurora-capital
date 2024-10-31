@@ -94,7 +94,7 @@ function Footer() {
           </div>
         </div>
         <Separator />
-        <div className='flex w-full items-center justify-between gap-x-4 pb-6 pt-2 font-[family-name:var(--font-geist-mono)] text-xs tracking-wider text-muted-foreground/[.8]'>
+        <div className='flex w-full flex-col items-center justify-between gap-x-4 pb-24 pt-2 text-center font-[family-name:var(--font-geist-mono)] text-xs tracking-wider text-muted-foreground/[.8] md:flex-row'>
           <p>&copy; {new Date().getFullYear()} Boubyan Bank & CODED. All rights reserved.</p>
           <p>
             Made by{' '}
