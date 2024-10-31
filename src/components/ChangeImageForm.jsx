@@ -44,7 +44,7 @@ function ChangeImageForm() {
         }}
         values={values}
         onValuesChange={setValues}
-        className={'min-w-[20rem]'}
+        className={''}
         formSchema={formSchema}
         fieldConfig={{
           image: {

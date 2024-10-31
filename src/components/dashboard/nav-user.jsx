@@ -38,7 +38,7 @@ export function NavUser({ user, me }) {
               </Avatar>
               <div className='grid flex-1 text-left text-sm leading-tight'>
                 <span className='truncate font-semibold'>{'Hi, ' + me.username}!</span>
-                <span className='truncate text-xs'>{balance}</span>
+                <span className='truncate text-xs'>Member since 2024</span>
               </div>
               <ChevronsUpDown className='ml-auto size-4' />
             </SidebarMenuButton>

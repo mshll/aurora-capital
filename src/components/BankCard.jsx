@@ -1,61 +1,56 @@
 // BankCard.jsx
-"use client" 
+'use client';
 
-
-import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
 import { GlareCard } from '@/components/ui/glare-card';
-import { Button } from '@/components/ui/button'
+import Image from 'next/image';
+import { useState } from 'react';
 
 function BankCard() {
   const [selectedCard, setSelectedCard] = useState('debit');
-  const cardDesigns = ['debit', 'credit']; 
-  const [isPinVisible, setisPinVisible] = useState(false); 
-  const pin = "1234"; 
+  const cardDesigns = ['debit', 'credit'];
+  const [isPinVisible, setisPinVisible] = useState(false);
+  const [pin] = useState(Math.floor(1000 + Math.random() * 9000).toString());
 
   return (
-    <div className="flex flex-col items-center justify-center">
-    <div className="flex">
-      <div className="card w-80 mt-[120px]">
-        <div className="card__content text-center relative p-20 transition-transform duration-1000 text-white font-bold">
-          <div className="card__front absolute top-0 bottom-0 right-0 left-0 p-8 flex items-center justify-center">
-            <GlareCard className="z-0">
-              <img src={`${selectedCard}_front.png`} alt="Selected Card" width={300} height={200} />
-            </GlareCard>
-          </div>
-          <div className="card__back absolute top-0 bottom-0 right-0 left-0 p-8 flex items-center justify-center">
-            <GlareCard className="z-0">
-              <img src={`${selectedCard}_back.png`} alt="Selected Card" width={300} height={200} />
-            </GlareCard>
+    <div className='mt-6 flex flex-col items-center justify-center'>
+      <div className='flex'>
+        <div className='card mt-[120px] scale-75 md:scale-100'>
+          <div className='card__content relative min-w-[300px] p-20 text-center font-bold text-white transition-transform duration-1000'>
+            <div className='card__front absolute bottom-0 left-0 right-0 top-0 flex items-center justify-center p-8'>
+              <GlareCard className='z-0'>
+                <Image src={`/${selectedCard}_front.png`} alt='Selected Card' width={300} height={200} />
+              </GlareCard>
+            </div>
+            <div className='card__back absolute bottom-0 left-0 right-0 top-0 flex items-center justify-center p-8'>
+              <GlareCard className='z-0'>
+                <Image src={`/${selectedCard}_back.png`} alt='Selected Card' width={300} height={200} />
+              </GlareCard>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className='side-menu ml-4 mt-2'>
-        <div className='card-designs flex flex-col'>
-          {cardDesigns.map((design) => (
-            <img
-              key={design}
-              src={`${design}_front.png`}
-              alt="Card design preview"
-              className="w-20 h-auto cursor-pointer mb-3 rounded-md"
-              onClick={() => setSelectedCard(design)}
-            />
-          ))}
+        <div className='side-menu ml-4 mt-2'>
+          <div className='card-designs flex flex-col'>
+            {cardDesigns.map((design) => (
+              <Image
+                key={design}
+                src={`/${design}_front.png`}
+                alt='Card design preview'
+                className='mb-3 h-auto w-20 cursor-pointer rounded-md'
+                onClick={() => setSelectedCard(design)}
+                width={300}
+                height={200}
+              />
+            ))}
+          </div>
         </div>
       </div>
-    </div>
-    <div className="mt-[150px] flex flex-col w-full">
-        <Button
-          onClick={() => setisPinVisible(!isPinVisible)}
-          variant="outline"
-        >
-          {isPinVisible ? "Hide pin" : "Show pin"}
+      <div className='mt-[150px] flex flex-col'>
+        <Button onClick={() => setisPinVisible(!isPinVisible)} variant='outline' className='md:px-32'>
+          {isPinVisible ? 'Hide pin' : 'Show pin'}
         </Button>
-        {isPinVisible && (
-          <p className="mt-2 text-lg font-semibold text-center text-muted-foreground">
-            {pin}
-          </p>
-        )}
+        {isPinVisible && <p className='mt-2 text-center text-lg font-semibold text-muted-foreground'>{pin}</p>}
       </div>
     </div>
   );

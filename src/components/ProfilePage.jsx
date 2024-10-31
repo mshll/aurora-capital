@@ -13,17 +13,17 @@ const ProfilePage = ({ profile }) => {
     //   <h2>Balance: {formatCurrency(profile.balance)}</h2>
     //   <ChangeImageForm />
     // </div>
-    <div className='flex h-full w-3/5 flex-row justify-center gap-5 p-8 pb-20 sm:p-20'>
-      <Card className='w-auto'>
+    <div className='flex flex-col justify-center gap-5 p-8 lg:flex-row'>
+      <Card>
         <CardHeader>
           <CardTitle className='text-xl'>{profile.username}</CardTitle>
           <CardDescription>Balance: {formatCurrency(profile.balance, false)}</CardDescription>
         </CardHeader>
-        <CardContent>
-          <Avatar className='h-96 w-96 border border-border'>
+        <CardContent className='flex flex-col items-center justify-center gap-4'>
+          <Avatar className='h-36 w-36 border border-border lg:h-96 lg:w-96'>
             <AvatarImage src={`${baseUrl}/${profile.image}`} alt='' />
             <AvatarFallback>
-              <UserIcon className='h-56 w-56' />
+              <UserIcon className='lg:h-56 lg:w-56' />
             </AvatarFallback>
           </Avatar>
           <ChangeImageForm />
@@ -34,9 +34,7 @@ const ProfilePage = ({ profile }) => {
           <CardTitle className='text-xl'>Your Cards</CardTitle>
         </CardHeader>
         <CardContent className='flex flex-1 flex-col items-center'>
-          <div>
-            <BankCard />
-          </div>
+          <BankCard />
         </CardContent>
       </Card>
     </div>
