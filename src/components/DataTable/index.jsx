@@ -8,13 +8,8 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { useEffect, useState } from 'react';
-import { CalendarIcon, MoreHorizontal } from 'lucide-react';
-import { format, parseISO, isWithinInterval } from 'date-fns';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,13 +18,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { cn, formatCurrency } from '@/lib/utils';
+import { format, isWithinInterval, parseISO } from 'date-fns';
+import { CalendarIcon, MoreHorizontal } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Calendar } from '../ui/calendar';
 import { DataTableColumnHeader } from './ColumnHeader';
 import { DataTableViewOptions } from './ViewOptions';
-import { cn, formatCurrency } from '@/lib/utils';
-import { Calendar } from '../ui/calendar';
 
-export function DataTable({ data, user, showOptions = true, pageSize = 10 }) {
+export function DataTable({ data, user, allUsers, showOptions = true, pageSize = 10 }) {
   const [dateRange, setDateRange] = useState({ from: null, to: null });
 
   const columns = [
@@ -64,10 +64,7 @@ export function DataTable({ data, user, showOptions = true, pageSize = 10 }) {
         const isRed = row.getValue('amount') < 0;
         const type = row.getValue('type');
         return (
-          <Badge
-            variant='outline'
-            className={`${isRed ? 'bg-red-200 dark:bg-red-800' : 'bg-green-200 dark:bg-green-800'}`}
-          >
+          <Badge variant='outline' className={`${isRed ? 'text-destructive' : 'text-success'}`}>
             {type.charAt(0).toUpperCase() + type.slice(1)}
           </Badge>
         );
@@ -93,6 +90,11 @@ export function DataTable({ data, user, showOptions = true, pageSize = 10 }) {
       id: 'actions',
       cell: ({ row }) => {
         const transaction = row.original;
+        const from =
+          user._id === transaction.from ? 'You' : allUsers.find((user) => user._id === transaction.from)?.username;
+        const to = user._id === transaction.to ? 'You' : allUsers.find((user) => user._id === transaction.to)?.username;
+        const self = from === to;
+
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -101,13 +103,16 @@ export function DataTable({ data, user, showOptions = true, pageSize = 10 }) {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align='end'>
-              <DropdownMenuLabel className='text-muted-foreground'>Actions</DropdownMenuLabel>
-              <DropdownMenuSeparator />
+              {!self && (
+                <>
+                  <DropdownMenuLabel className='text-muted-foreground'>From: {from}</DropdownMenuLabel>
+                  <DropdownMenuLabel className='text-muted-foreground'>To: {to}</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                </>
+              )}
               <DropdownMenuItem onClick={() => navigator.clipboard.writeText(transaction._id)}>
                 Copy transaction ID
               </DropdownMenuItem>
-              <DropdownMenuItem>View customer</DropdownMenuItem>
-              <DropdownMenuItem>View transaction details</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         );

@@ -1,15 +1,15 @@
 'use client';
 
+import { login } from '@/actions/auth';
 import AutoForm, { AutoFormSubmit } from '@/components/ui/auto-form';
-import * as z from 'zod';
-import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
-import { Button } from '@/components/ui/button';
-import { login } from '@/actions/auth';
-import { toast } from 'sonner';
-import { redirect, useSearchParams } from 'next/navigation';
 import { LoaderCircle } from 'lucide-react';
+import { redirect, useSearchParams } from 'next/navigation';
+import { useState } from 'react';
+import { toast } from 'sonner';
+import * as z from 'zod';
 
 const formSchema = z.object({
   username: z
@@ -71,7 +71,7 @@ function LoginForm() {
           password: {
             inputProps: {
               type: 'password',
-              placeholder: '••••••••',
+              // placeholder: '••••••••',
             },
           },
         }}
@@ -89,7 +89,6 @@ function LoginForm() {
         variant='outline'
         className='w-full gap-3'
         onClick={() => {
-          // window.alert("You didn't think this would actually work, did you?");
           toast("You didn't think this would actually work, did you?", {
             action: {
               label: ':(',

@@ -1,7 +1,6 @@
 'use client';
 
-import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Sparkles, UserIcon } from 'lucide-react';
-
+import { logout } from '@/actions/auth';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -13,10 +12,9 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
-import { formatCurrency, getGreeting } from '@/lib/utils';
-import { logout } from '@/actions/auth';
+import { formatCurrency } from '@/lib/utils';
+import { ChevronsUpDown, UserIcon } from 'lucide-react';
 import Link from 'next/link';
-import { ThemeToggler } from '../NavBar/ThemeToggler';
 
 export function NavUser({ user, me }) {
   const { isMobile } = useSidebar();
@@ -39,8 +37,8 @@ export function NavUser({ user, me }) {
                 </AvatarFallback>
               </Avatar>
               <div className='grid flex-1 text-left text-sm leading-tight'>
-                <span className='truncate font-semibold'>{getGreeting() + ', ' + me.username}!</span>
-                <span className='truncate text-xs text-muted-foreground'>{balance}</span>
+                <span className='truncate font-semibold'>{'Hi, ' + me.username}!</span>
+                <span className='truncate text-xs'>{balance}</span>
               </div>
               <ChevronsUpDown className='ml-auto size-4' />
             </SidebarMenuButton>
@@ -68,7 +66,7 @@ export function NavUser({ user, me }) {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <Link href='/profile'>My Account</Link>
+                <Link href='/dashboard/profile'>My Account</Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Link href='/'>Back to Home</Link>

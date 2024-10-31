@@ -1,7 +1,7 @@
 import { transfer } from '@/actions/transactions';
 import { Input } from '@/components/ui/input';
-import { Label } from './ui/label';
 import { toast } from 'sonner';
+import { Label } from './ui/label';
 
 function TransferForm({ username }) {
   const handlePayment = () => {
@@ -29,7 +29,7 @@ function TransferForm({ username }) {
   };
 
   return (
-    <form onSubmit={handlePayment} className='flex w-full flex-col items-start gap-4'>
+    <form action={handlePayment} className='flex w-full flex-col items-start gap-4'>
       <Label htmlFor='amount' className='text-right'>
         Amount
       </Label>

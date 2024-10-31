@@ -1,13 +1,13 @@
 'use client';
 
-import AutoForm, { AutoFormSubmit } from '@/components/ui/auto-form';
-import * as z from 'zod';
-import { DependencyType } from './ui/auto-form/types';
 import { register } from '@/actions/auth';
+import AutoForm, { AutoFormSubmit } from '@/components/ui/auto-form';
+import { LoaderCircle } from 'lucide-react';
+import { redirect } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { redirect } from 'next/navigation';
-import { LoaderCircle } from 'lucide-react';
+import * as z from 'zod';
+import { DependencyType } from './ui/auto-form/types';
 
 const MAX_FILE_SIZE = 25000000;
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
@@ -86,7 +86,7 @@ function RegisterForm() {
               });
             } else {
               toast.success('Registered successfully.');
-              redirect('/');
+              redirect('/dashboard');
             }
           });
         }}
@@ -98,13 +98,13 @@ function RegisterForm() {
           password: {
             inputProps: {
               type: 'password',
-              placeholder: '••••••••',
+              // placeholder: '••••••••',
             },
           },
           confirm: {
             inputProps: {
               type: 'password',
-              placeholder: '••••••••',
+              // placeholder: '••••••••',
             },
           },
           image: {

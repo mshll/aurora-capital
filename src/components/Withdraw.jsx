@@ -1,7 +1,7 @@
 import { withdrawMoney } from '@/actions/transactions';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from './ui/label';
-import { Button } from './ui/button';
+import { Label } from '@/components/ui/label';
 
 const WithdrawToAccount = () => {
   return (

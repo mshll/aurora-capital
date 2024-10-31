@@ -1,28 +1,18 @@
 'use client';
-import { useState } from 'react';
-import * as React from 'react';
-import { Button, buttonVariants } from '@/components/ui/button';
-import { ChevronsUpDown } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from './ui/textarea';
-import { Checkbox } from './ui/checkbox';
-import Link from 'next/link';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { transfer } from '@/actions/transactions';
+import { Button, buttonVariants } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import * as React from 'react';
+import { useState } from 'react';
 import { toast } from 'sonner';
 import PayCard from './PayCard';
-import { useSearchParams } from 'next/navigation';
+import { Checkbox } from './ui/checkbox';
+import { Textarea } from './ui/textarea';
 
 function TransferLinkWidget({ user, users, me, defaultTab = 'transfer', minTransfer = false, className, ...props }) {
   const [selectedBeneficiary, setSelectedBeneficiary] = useState();

@@ -11,4 +11,4 @@ async function getHeaders({ auth = true, contentType = true } = {}) {
   return headers;
 }
 
-export { getHeaders, baseUrl };
+export { baseUrl, getHeaders };
