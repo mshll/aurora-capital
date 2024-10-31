@@ -1,3 +1,4 @@
+import HeroBg from '@/components/HeroBg';
 import MainLayout from '@/components/MainLayout';
 import { Avatar } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -10,7 +11,10 @@ import Link from 'next/link';
 const ContactPage = () => {
   return (
     <MainLayout>
-      <div className='w-[500px] space-y-8 pt-10'>
+    <HeroBg className={'absolute w-screen h-screen top-0 right-0'}>
+      </HeroBg>
+
+      <div className='w-[500px] space-y-8 py-32'>
         <div className='space-y-2'>
           <h2 className='text-3xl font-bold'>Get in touch</h2>
           <p className='text-gray-500 dark:text-gray-400'>Don&apos;t hesitate to reach out! We don&apos;t bite.</p>

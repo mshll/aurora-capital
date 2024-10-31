@@ -7,7 +7,7 @@ export const AuroraBackground = ({ className, children, showRadialGradient = tru
     <main>
       <div
         className={cn(
-          'transition-bg relative flex h-[100vh] flex-col items-center justify-center bg-background text-foreground',
+          'transition-bg relative flex h-[100vh] flex-col items-center justify-center text-foreground',
           className,
         )}
         {...props}

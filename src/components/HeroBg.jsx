@@ -1,11 +1,12 @@
 'use client';
 
 import { AuroraBackground } from '@/components/ui/aurora-background';
+import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 
 function HeroBg({ children, className }) {
   return (
-    <AuroraBackground className={'w-full'}>
+    <AuroraBackground className={cn('w-full aurora-bg', className)}>
       <motion.div
         initial={{ opacity: 0.0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
