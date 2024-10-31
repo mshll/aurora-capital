@@ -8,8 +8,23 @@ export const getAllUsers = async () => {
     method: 'GET',
     headers: await getHeaders(),
   });
-  const users = await response.json();
-  return users.reverse();
+
+  // So we 'specialUsers' show first :)
+  let users = await response.json();
+  users = users.reverse();
+  const specialUsers = ['aurory', 'janna', 'meshal', 'wahab', 'yousef', 'nora', 'sara', 'fatima', 'tariq', 'aya'];
+  const specialUsersArray = [];
+  const normalUsersArray = [];
+  users.forEach((user) => {
+    if (specialUsers.includes(user.username?.toLowerCase())) {
+      specialUsersArray.push(user);
+    } else {
+      normalUsersArray.push(user);
+    }
+  });
+  specialUsersArray.reverse();
+  users = specialUsersArray.concat(normalUsersArray);
+  return users;
 };
 
 export const myProfile = async () => {

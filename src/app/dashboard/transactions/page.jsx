@@ -18,7 +18,7 @@ async function TransactionsPage() {
   });
 
   return (
-    <div className='flex w-full auto-cols-auto auto-rows-min items-stretch gap-4'>
+    <div className='flex w-full auto-cols-auto auto-rows-min flex-col items-stretch gap-4'>
       <DataTable data={transactions} user={user} pageSize={12} allUsers={allUsers} />
     </div>
   );
