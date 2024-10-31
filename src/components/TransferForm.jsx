@@ -29,7 +29,7 @@ function TransferForm({ username }) {
   };
 
   return (
-    <form onSubmit={handlePayment} className='flex w-full flex-col items-start gap-4'>
+    <form action={handlePayment} className='flex w-full flex-col items-start gap-4'>
       <Label htmlFor='amount' className='text-right'>
         Amount
       </Label>

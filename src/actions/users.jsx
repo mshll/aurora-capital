@@ -33,7 +33,6 @@ export const updateProfile = async ({ image }) => {
     });
 
     const result = await response.json();
-    revalidatePath('/profile');
     revalidatePath('/dashboard/profile');
     return !result.success; // because if successfull result won't have 'success' key
   } catch (error) {

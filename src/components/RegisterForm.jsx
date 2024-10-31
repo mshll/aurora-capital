@@ -86,7 +86,7 @@ function RegisterForm() {
               });
             } else {
               toast.success('Registered successfully.');
-              redirect('/');
+              redirect('/dashboard');
             }
           });
         }}

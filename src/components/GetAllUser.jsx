@@ -98,21 +98,19 @@ function GetAllUsers({ baseUrl, users, singleCol = false }) {
   });
 
   return (
-    <div className='overflow-hidden rounded-lg border bg-card p-6 text-card-foreground shadow-sm'>
-      <div className='relative mb-4 w-full'>
-        <Search className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
+    <div className='flex h-full flex-col overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm'>
+      <div className='sticky top-0 z-10 w-full bg-card px-4 py-6'>
+        <Search className='absolute left-8 top-8 h-4 w-4 text-muted-foreground' />
         <Input
           placeholder='Search for a user'
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className='pl-8'
+          className='pl-14'
         />
       </div>
-      <div className='no-scrollbar mb-10 flex size-full flex-col space-y-4 overflow-auto'>
-        <div className={cn(`grid grid-cols-1 gap-4`, singleCol ? 'grid-cols-1' : 'md:grid-cols-2 lg:grid-cols-3')}>
-          {userList}
-          <span className='col-span-full'>&nbsp;</span>
-        </div>
+
+      <div className='flex-1 overflow-y-auto px-4 pb-4'>
+        <div className={cn(`grid gap-4`, singleCol ? 'grid-cols-1' : 'md:grid-cols-2 lg:grid-cols-3')}>{userList}</div>
       </div>
     </div>
   );
