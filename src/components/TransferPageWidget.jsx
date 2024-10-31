@@ -36,6 +36,12 @@ function TransferPageWidget({ user }) {
     fetchData();
   }, [userID]);
 
+  useEffect(() => {
+    if (amountParam) {
+      setAmount(amountParam);
+    }
+  }, [amountParam]);
+
   if (!user) {
     redirect(`/login?redirect=${pathname}?userid=${userID}%26username=${username}%26amount=${amount}`);
   }
@@ -58,7 +64,7 @@ function TransferPageWidget({ user }) {
 
   const handleUpdate = () => {
     const newUrl = `${pathname}?userid=${userID}&username=${username}&amount=${amount}`;
-    navigator.clipboard.writeText(newUrl);
+    navigator.clipboard.writeText(`${window.location.origin}${newUrl}`);
 
     toast.success('Updated link copied to clipboard!');
 
