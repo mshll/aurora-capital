@@ -51,7 +51,7 @@ export const withdrawMoney = async (formData) => {
 
 export const transfer = async (formData, username) => {
   const userData = Object.fromEntries(formData);
-  console.log(userData, username);
+
   try {
     const response = await fetch(`${baseUrl}/mini-project/api/transactions/transfer/${username}`, {
       method: 'PUT',

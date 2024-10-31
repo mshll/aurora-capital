@@ -36,8 +36,6 @@ function LoginForm() {
   const searchParams = useSearchParams();
   const redirectUrl = searchParams.get('redirect') || '/dashboard';
 
-  console.log(redirectUrl);
-
   return (
     <>
       <AutoForm
