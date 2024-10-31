@@ -15,8 +15,8 @@ export default function About() {
   const founderCards = founders.map((founder) => (
     <div key={founder.name} className='flex max-w-xl flex-col items-center p-4 text-center'>
       <img src={founder.image} alt={`${founder.name}'s profile`} className='mb-2 h-72 w-72 rounded-full' />
-      <h1 className='font-semibold text-gray-800 dark:text-gray-100'>{founder.name}</h1>
-      <p className='text-secondary dark:text-gray-300'>{founder.title}</p>
+      <h1 className='pt-5 text-lg font-semibold text-gray-800 dark:text-gray-100'>{founder.name}</h1>
+      <p className='text-secondary dark:text-primary'>{founder.title}</p>
     </div>
   ));
 
