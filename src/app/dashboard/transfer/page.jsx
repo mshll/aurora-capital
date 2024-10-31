@@ -11,7 +11,7 @@ async function DashboardTransferPage() {
     <>
       <main className='relative flex h-full flex-col items-center justify-start'>
         <TransferLinkWidget
-          className={'mt-32 flex min-w-[40rem] flex-col items-stretch'}
+          className={'mt-32 flex flex-col items-stretch md:min-w-[20rem] lg:min-w-[40rem]'}
           user={user}
           me={me}
           users={allUsers}
