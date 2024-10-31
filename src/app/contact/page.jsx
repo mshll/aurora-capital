@@ -11,7 +11,7 @@ import Link from 'next/link';
 const ContactPage = () => {
   return (
     <MainLayout>
-    <HeroBg className={'absolute w-screen h-screen top-0 right-0'}>
+    <HeroBg className={'aurora-bg absolute w-screen h-screen top-0 right-0'}>
       </HeroBg>
 
       <div className='w-[500px] space-y-8 py-32'>

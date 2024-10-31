@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 
 function HeroBg({ children, className }) {
   return (
-    <AuroraBackground className={cn('w-full aurora-bg', className)}>
+    <AuroraBackground className={cn('w-full', className)}>
       <motion.div
         initial={{ opacity: 0.0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}

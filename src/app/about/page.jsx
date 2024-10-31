@@ -30,7 +30,7 @@ export default function About() {
         />
       </Head>
 
-      <HeroBg className={'absolute w-screen h-screen top-0 right-0'}>
+      <HeroBg className={'aurora-bg absolute w-screen h-screen top-0 right-0'}>
       </HeroBg>
       <main className='flex flex-col items-center space-y-16 px-4 py-10 pt-40 md:px-20 lg:px-32'>
         {/* About Us Section */}
