@@ -54,7 +54,7 @@ function TransferLinkWidget({ user, users, me, defaultTab = 'transfer', minTrans
     response.then((res) => {
       if (res) {
         toast.success('Transfer Successful!', {
-          description: `Transfer of ${amount} KWD to ${username} was successful.`,
+          description: `Transfer of ${amount} KWD to ${beneficiary} was successful.`,
         });
         event.target.reset();
       } else {
@@ -74,18 +74,6 @@ function TransferLinkWidget({ user, users, me, defaultTab = 'transfer', minTrans
           onClick: () => window.open(link, '_blank'),
         },
       });
-    }
-  };
-
-  const handleCopy = async (payMeLink) => {
-    try {
-      await navigator.clipboard.writeText(payMeLink);
-      setIsCopied(true);
-      toast.success('Link copied to clipboard!');
-      setTimeout(() => setIsCopied(false), 2000); // Reset copy state after 2 seconds
-    } catch (error) {
-      console.error('Failed to copy:', error);
-      toast.error('Failed to copy link.');
     }
   };
 

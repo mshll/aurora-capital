@@ -58,6 +58,10 @@ function TransferPageWidget({ user }) {
 
   const handleUpdate = () => {
     const newUrl = `${pathname}?userid=${userID}&username=${username}&amount=${amount}`;
+    navigator.clipboard.writeText(newUrl);
+
+    toast.success('Updated link copied to clipboard!');
+
     redirect(newUrl);
   };
 
