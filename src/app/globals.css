@@ -87,14 +87,14 @@ body {
   }
 }
 
-@keyframes rotate {
+/* @keyframes rotate {
   0% {
     --tw-rotate-angle: 0deg;
   }
   100% {
     --tw-rotate-angle: 360deg;
   }
-}
+} */
 /* Vanilla CSS for flip card */
 .card {
   perspective: 800px;

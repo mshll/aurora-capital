@@ -68,6 +68,10 @@ module.exports = {
         sm: 'calc(var(--radius) - 4px)',
       },
       keyframes: {
+        rotate: {
+          "0%": { transform: "rotate(0deg) scale(10)" },
+          "100%": { transform: "rotate(-360deg) scale(10)" },
+        },
         'accordion-down': {
           from: {
             height: '0',
@@ -76,13 +80,9 @@ module.exports = {
             height: 'var(--radix-accordion-content-height)',
           },
         },
-        
-        'border': {
-                    to: { '--border-angle': '360deg' },
-                },
-        rotate: {
-          '0%': { '--tw-rotate-angle': '0deg' },
-          '100%': { '--tw-rotate-angle': '360deg' },
+        border: {
+          from: { '--border-angle': '0deg' },
+          to: { '--border-angle': '360deg' },
         },
         'accordion-up': {
           from: {
@@ -144,7 +144,7 @@ module.exports = {
         fourth: "moveHorizontal 40s ease infinite",
         fifth: "moveInCircle 20s ease infinite",
         'border': 'border 4s linear infinite',
-        rotate: 'rotate 5s linear infinite',
+        rotate: "rotate 5s linear infinite",
       },
     },
   },
